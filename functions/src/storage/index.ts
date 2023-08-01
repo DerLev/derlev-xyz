@@ -1,1 +1,1 @@
-export * from "./moveToMainBucket";
+export * from "./optimizeImages";
