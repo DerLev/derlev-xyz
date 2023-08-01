@@ -1,0 +1,28 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "repository": "https://github.com/DerLev/derlev-xyz.git",
+  "author": "DerLev",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.3.0",
+    "@google-cloud/logging": "^10.5.0",
+    "@google/events": "^5.4.0",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "eslint": "^8.46.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.28.0",
+    "typescript": "^5.1.6"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "scripts": {
+    "lint": "eslint --fix --ext .js,.ts .",
+    "build": "tsc",
+    "gcp-build": "yarn build"
+  }
+}
