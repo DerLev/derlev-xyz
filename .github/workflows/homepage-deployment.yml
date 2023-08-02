@@ -61,6 +61,8 @@ jobs:
     permissions:
       id-token: write
     steps:
+      - name: Prevent Auth from printing warning
+        run: echo "Shut up!" > dont_warn.txt
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v1
@@ -90,6 +92,7 @@ jobs:
           service_account: ${{ secrets.GCP_SA_EMAIL }}
           token_format: access_token
           access_token_lifetime: 60s
+          create_credentials_file: false
       - name: Only leave the 2 most recent Revisions
         uses: actions/github-script@v6
         with:
