@@ -39,8 +39,8 @@ jobs:
       - name: Annotate Code
         uses: DerLev/eslint-annotations@v1
         with:
-          eslint-report: homepage/eslint_report.json
-          typescript-log: homepage/typescript.log
+          eslint-report: functions/eslint_report.json
+          typescript-log: functions/typescript.log
           github-token: ${{ secrets.GITHUB_TOKEN }}
           error-on-warn: true
           status-check-name: Annotations
