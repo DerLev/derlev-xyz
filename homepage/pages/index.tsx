@@ -51,9 +51,8 @@ const Index = () => {
           alt={'DerLev Profile'}
           width={128}
           css={styles.profile}
-          placeholder="blur"
           quality={80}
-          loading="lazy"
+          priority
         />
         <h1 css={styles.title}>
           Hi, my name is <span css={styles.derlev}>DerLev</span>!
