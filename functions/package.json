@@ -24,6 +24,7 @@
   },
   "scripts": {
     "lint": "eslint --fix --ext .js,.ts .",
+    "lint:nofix": "eslint --ext .js,.ts .",
     "build": "tsc",
     "gcp-build": "yarn add sharp && yarn build"
   }

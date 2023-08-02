@@ -1,0 +1,48 @@
+name: Cloud Functions Integration
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'functions/**'
+      - '!functions/**.md'
+      - '.github/workflows/functions-integration.yml'
+
+jobs:
+  lint-typecheck:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: read
+      contents: read
+    defaults:
+      run:
+        working-directory: functions
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Setup Nodejs Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+          cache-dependency-path: 'functions/yarn.lock'
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+      - name: Lint
+        run: yarn lint:nofix --output-file eslint_report.json --format json
+        continue-on-error: true
+      - name: Type Check
+        run: yarn tsc --noEmit > typescript.log
+        continue-on-error: true
+      - name: Annotate Code
+        uses: DerLev/eslint-annotations@v1
+        with:
+          eslint-report: homepage/eslint_report.json
+          typescript-log: homepage/typescript.log
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          error-on-warn: true
+          status-check-name: Annotations
+          fail-in-pr: false
+          add-notice-with-url: false
