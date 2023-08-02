@@ -15,7 +15,10 @@
     "@typescript-eslint/parser": "^6.2.1",
     "eslint": "^8.46.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
     "sharp": "^0.32.4",
     "typescript": "^5.1.6"
   },
@@ -25,7 +28,8 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.ts .",
     "lint:nofix": "eslint --ext .js,.ts .",
-    "build": "tsc",
-    "gcp-build": "yarn add sharp && yarn build"
+    "build": "rm -rf lib/* && tsc",
+    "gcp-build": "yarn add sharp && yarn build",
+    "predeploy": "yarn lint && yarn build"
   }
 }
