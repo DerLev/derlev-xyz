@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         text: {
           100: '#fafafa',
+          300: '#bbbbbb',
           500: '#7d7d7d',
           900: '#050505',
         },
