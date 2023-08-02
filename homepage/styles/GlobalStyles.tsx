@@ -8,7 +8,7 @@ const customStyles = css({
   },
 
   body: {
-    ...tw`bg-background text-text-100 font-body`,
+    ...tw`bg-background font-body text-text-100`,
     ...tw`antialiased`,
   },
 })

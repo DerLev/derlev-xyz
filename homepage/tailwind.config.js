@@ -4,13 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'text': {
+        text: {
           100: '#fafafa',
           500: '#7d7d7d',
-          900: '#050505'
+          900: '#050505',
         },
-        'background': '#050505',
-        'primary': {
+        background: '#050505',
+        primary: {
           50: '#f1e6ff',
           100: '#d4b3ff',
           200: '#b780fe',
@@ -20,10 +20,10 @@ module.exports = {
           600: '#4d01b2',
           700: '#37017f',
           800: '#21004c',
-          900: '#0b0019'
+          900: '#0b0019',
         },
-        'secondary': '#262626',
-        'accent': {
+        secondary: '#262626',
+        accent: {
           50: '#e7fef5',
           100: '#b6fce0',
           200: '#85facb',
@@ -33,14 +33,14 @@ module.exports = {
           600: '#07ab6a',
           700: '#057a4b',
           800: '#03492d',
-          900: '#01180f'
+          900: '#01180f',
         },
       }
     },
     fontFamily: {
-      'display': ['"Space Grotesk"', 'sans-serif'],
-      'body': ['"Space Grotesk"', 'sans-serif']
-    }
+      display: ['"Space Grotesk"', 'sans-serif'],
+      body: ['"Space Grotesk"', 'sans-serif'],
+    },
   },
   plugins: [],
 }
