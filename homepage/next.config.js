@@ -4,6 +4,14 @@ const withTwin = require('./withTwin')
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
+  rewrites: async () => {
+    return [
+      {
+        source: '/healthz',
+        destination: '/api/healthz'
+      }
+    ]
+  }
 }
 
 module.exports = withTwin(nextConfig)
