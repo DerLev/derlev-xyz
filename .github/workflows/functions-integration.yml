@@ -1,12 +1,13 @@
 name: Cloud Functions Integration
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'functions/**'
-      - '!functions/**.md'
-      - '.github/workflows/functions-integration.yml'
+  # push:
+  #   branches:
+  #     - 'main'
+  #   paths:
+  #     - 'functions/**'
+  #     - '!functions/**.md'
+  #     - '.github/workflows/functions-integration.yml'
+  workflow_call:
 
 jobs:
   lint-typecheck:

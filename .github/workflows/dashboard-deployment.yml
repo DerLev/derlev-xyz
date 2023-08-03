@@ -1,12 +1,13 @@
 name: Dashboard Deployment
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'dashboard/**'
-      - '!dashboard/**.md'
-      - '.github/workflows/dashboard-deployment.yml'
+  # push:
+  #   branches:
+  #     - 'main'
+  #   paths:
+  #     - 'dashboard/**'
+  #     - '!dashboard/**.md'
+  #     - '.github/workflows/dashboard-deployment.yml'
+  workflow_call:
 
 env:
   CONTAINER_REGISTRY_LOCATION: europe-west1

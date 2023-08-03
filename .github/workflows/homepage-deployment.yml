@@ -1,12 +1,13 @@
 name: Homepage Deployment
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'homepage/**'
-      - '!homepage/**.md'
-      - '.github/workflows/homepage-deployment.yml'
+  # push:
+  #   branches:
+  #     - 'main'
+  #   paths:
+  #     - 'homepage/**'
+  #     - '!homepage/**.md'
+  #     - '.github/workflows/homepage-deployment.yml'
+  workflow_call:
 
 env:
   CONTAINER_REGISTRY_LOCATION: europe-west1
