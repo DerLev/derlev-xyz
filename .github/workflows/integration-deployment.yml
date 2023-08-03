@@ -37,17 +37,20 @@ jobs:
           filters: |
             homepage:
               - 'homepage/**'
+              - '!homepage/**.md'
             dashboard:
               - 'dashboard/**'
+              - '!dashboard/**.md'
             functions:
               - 'functions/**'
+              - '!functions/**.md'
   
   # START: Cloud Functions
   func-lint-typecheck:
     name: 'Functions: Lint & Type Check'
     runs-on: ubuntu-latest
     needs: filter-paths
-    # if: needs.filter-paths.outputs.functions == 'true'
+    if: needs.filter-paths.outputs.functions == 'true'
     permissions:
       checks: write
       pull-requests: read
@@ -89,7 +92,7 @@ jobs:
     name: 'Homepage: Lint & Type Check'
     runs-on: ubuntu-latest
     needs: filter-paths
-    # if: needs.filter-paths.outputs.homepage == 'true'
+    if: needs.filter-paths.outputs.homepage == 'true'
     permissions:
       checks: write
       pull-requests: read
@@ -221,8 +224,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ github.ref_name }}-homepage
-          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-homepage
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ env.HOME_CONTAINER_NAME }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ env.HOME_CONTAINER_NAME }}
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
       - name: Get short commit SHA
@@ -242,7 +245,7 @@ jobs:
     name: 'Dashboard: Lint & Type Check'
     runs-on: ubuntu-latest
     needs: filter-paths
-    # if: needs.filter-paths.outputs.dashboard == 'true'
+    if: needs.filter-paths.outputs.dashboard == 'true'
     permissions:
       checks: write
       pull-requests: read
@@ -374,8 +377,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ github.ref_name }}-dashboard
-          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-dashboard
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ env.DASH_CONTAINER_NAME }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ env.DASH_CONTAINER_NAME }}
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
       - name: Get short commit SHA
