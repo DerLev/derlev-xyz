@@ -1,8 +1,8 @@
 /** @type {import("prettier").Options} */
 const config = {
-  arrowParens: 'avoid',
+  arrowParens: 'always',
   bracketSpacing: true,
-  jsxBracketSameLine: false,
+  bracketSameLine: false,
   printWidth: 80,
   semi: false,
   singleQuote: true,
