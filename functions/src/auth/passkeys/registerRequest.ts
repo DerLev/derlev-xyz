@@ -1,5 +1,5 @@
 import type {HttpFunction} from "@google-cloud/functions-framework";
 
-export const helloWorld: HttpFunction = (req, res) => {
+export const registerRequest: HttpFunction = (req, res) => {
   res.json({message: "Hello World!"});
 };
