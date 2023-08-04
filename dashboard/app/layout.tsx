@@ -1,3 +1,4 @@
+import AppShell from '@/components/AppShell'
 import EmotionProvider from '@/components/EmotionProvider'
 import type { Metadata } from 'next'
 
@@ -13,7 +14,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <EmotionProvider>{children}</EmotionProvider>
+        <EmotionProvider>
+          <AppShell>{children}</AppShell>
+        </EmotionProvider>
       </body>
     </html>
   )
