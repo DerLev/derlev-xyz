@@ -1,7 +1,13 @@
 'use client'
 
-import { Title } from '@mantine/core'
+import { useSigninCheck } from 'reactfire'
 
 export default function Home() {
-  return <Title>Hello World!</Title>
+  const { data } = useSigninCheck()
+
+  return (
+    <pre style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      {JSON.stringify(data, null, 2)}
+    </pre>
+  )
 }

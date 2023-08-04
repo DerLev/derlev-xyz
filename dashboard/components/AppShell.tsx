@@ -10,7 +10,11 @@ const AppShell = ({ children }: PropsWithChildren) => {
     <MantineAppShell
       padding="md"
       styles={(theme) => ({
-        main: { backgroundColor: theme.colors.dark[8] },
+        main: {
+          backgroundColor: theme.colors.dark[8],
+          position: 'relative',
+          display: 'grid',
+        },
       })}
       header={<Header />}
       navbar={<Navbar />}
