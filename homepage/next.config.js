@@ -11,7 +11,8 @@ const nextConfig = {
         destination: '/api/healthz'
       }
     ]
-  }
+  },
+  poweredByHeader: false
 }
 
 module.exports = withTwin(nextConfig)
