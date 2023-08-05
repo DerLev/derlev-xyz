@@ -1,11 +1,20 @@
 'use client'
 
 import GoogleSvg from '@/assets/GoogleSvg'
-import { signInWithOAuth } from '@/lib/authFlows'
+import { signInWithOAuth, signInWithPasskey } from '@/lib/authFlows'
 import useLoginStatus from '@/lib/useLoginStatus'
-import { Button, Container, Group, Paper, Skeleton, Text } from '@mantine/core'
+import {
+  Button,
+  Container,
+  Divider,
+  Group,
+  Paper,
+  Skeleton,
+  Text,
+} from '@mantine/core'
 import { GoogleAuthProvider } from 'firebase/auth'
 import { useAuth } from 'reactfire'
+import { GoPasskeyFill } from 'react-icons/go'
 
 const Login = () => {
   const { status } = useLoginStatus({ behavior: 'notUser' })
@@ -18,7 +27,7 @@ const Login = () => {
         <Text size="lg" weight={500}>
           Welcome to derlev.xyz, login with
         </Text>
-        <Group grow mt="md" noWrap>
+        <Group grow mt="md" mb="lg" noWrap>
           <Skeleton visible={status !== 'success'} w="100%" radius="xl">
             <Button
               radius="xl"
@@ -28,6 +37,20 @@ const Login = () => {
               fullWidth
             >
               Google
+            </Button>
+          </Skeleton>
+        </Group>
+        <Divider label="OR" labelPosition="center" />
+        <Group grow mt="lg" noWrap>
+          <Skeleton visible={status !== 'success'} w="100%" radius="xl">
+            <Button
+              radius="xl"
+              variant="default"
+              leftIcon={<GoPasskeyFill />}
+              onClick={() => signInWithPasskey(auth)}
+              fullWidth
+            >
+              Signin with Passkey
             </Button>
           </Skeleton>
         </Group>
