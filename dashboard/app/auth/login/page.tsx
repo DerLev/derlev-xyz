@@ -4,6 +4,7 @@ import GoogleSvg from '@/assets/GoogleSvg'
 import { signInWithOAuth, signInWithPasskey } from '@/lib/authFlows'
 import useLoginStatus from '@/lib/useLoginStatus'
 import {
+  Alert,
   Button,
   Container,
   Divider,
@@ -15,11 +16,14 @@ import {
 import { GoogleAuthProvider } from 'firebase/auth'
 import { useAuth } from 'reactfire'
 import { GoPasskeyFill } from 'react-icons/go'
+import useFidoSupport from '@/lib/useFidoSupport'
+import { HiOutlineInformationCircle } from 'react-icons/hi2'
 
 const Login = () => {
   const { status } = useLoginStatus({ behavior: 'notUser' })
   const auth = useAuth()
   const googleProvider = new GoogleAuthProvider()
+  const { fido } = useFidoSupport()
 
   return (
     <Container maw={420} w="100%">
@@ -49,11 +53,17 @@ const Login = () => {
               leftIcon={<GoPasskeyFill />}
               onClick={() => signInWithPasskey(auth)}
               fullWidth
+              disabled={!fido}
             >
               Signin with Passkey
             </Button>
           </Skeleton>
         </Group>
+        {!fido && status === 'success' && (
+          <Alert mt="md" color="gray" icon={<HiOutlineInformationCircle />}>
+            <Text>Your browser does not support passkeys!</Text>
+          </Alert>
+        )}
       </Paper>
     </Container>
   )

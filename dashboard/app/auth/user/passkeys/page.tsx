@@ -3,6 +3,7 @@
 import useLoginStatus from '@/lib/useLoginStatus'
 import {
   ActionIcon,
+  Alert,
   Box,
   Button,
   Container,
@@ -28,6 +29,8 @@ import {
 } from 'firebase/firestore'
 import { PasskeyCredentialsCollection } from '@/types/firestore'
 import {
+  HiOutlineExclamationTriangle,
+  HiOutlineInformationCircle,
   HiOutlineKey,
   HiOutlinePencilSquare,
   HiOutlineTrash,
@@ -35,9 +38,11 @@ import {
 import { dateTimeFormatter } from '@/lib/formatters'
 import { openConfirmModal, openContextModal } from '@mantine/modals'
 import firestoreConverter from '@/lib/firestoreConverter'
+import useFidoSupport from '@/lib/useFidoSupport'
 
 const User = () => {
   const { user } = useLoginStatus({ behavior: 'onlyUser' })
+  const { fido, platformAuth } = useFidoSupport()
   const [loading, setLoading] = useState(false)
 
   const firestore = useFirestore()
@@ -176,9 +181,28 @@ const User = () => {
               onClick={() => registerFidoCredential()}
               loading={loading}
               leftIcon={<GoPasskeyFill />}
+              disabled={!fido}
             >
               Register new Passkey
             </Button>
+            {!fido && status === 'success' && (
+              <Alert color="red" icon={<HiOutlineExclamationTriangle />}>
+                <Text>
+                  Your browser does not support the FIDO standard used by
+                  Passkeys. To register a Passkey use a different browser or a
+                  newer version!
+                </Text>
+              </Alert>
+            )}
+            {!platformAuth && fido && status === 'success' && (
+              <Alert color="blue" icon={<HiOutlineInformationCircle />}>
+                <Text>
+                  Your device does not have the Passkey functionality built-in.
+                  You can still register a cross-platform Passkey (e.g.
+                  Yubikey).
+                </Text>
+              </Alert>
+            )}
           </Stack>
         </Paper>
       </Skeleton>
