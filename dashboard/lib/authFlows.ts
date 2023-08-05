@@ -56,23 +56,86 @@ const signInWithOAuth = async (auth: Auth, provider: AuthProvider) => {
  * @param auth The auth instance
  */
 const signInWithPasskey = async (auth: Auth) => {
-  const res = await fetch(
-    'https://europe-west1-derlev-xyz.cloudfunctions.net/signinRequest',
-    { method: 'POST' },
-  ).then((res) => res.json())
+  try {
+    notifications.show({
+      id: 'fido-loading',
+      loading: true,
+      title: 'Authorizing with Passkey',
+      message: 'Loading Passkey challenge...',
+      autoClose: false,
+      withCloseButton: false,
+    })
 
-  const authentication = await startAuthentication(res.authentication)
+    const res = await fetch(
+      'https://europe-west1-derlev-xyz.cloudfunctions.net/signinRequest',
+      { method: 'POST' },
+    ).then((res) => res.json())
 
-  const credAuth = await fetch(
-    `https://europe-west1-derlev-xyz.cloudfunctions.net/signinResponse?docId=${res.docId}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(authentication),
-    },
-  ).then((res) => res.json())
+    notifications.update({
+      id: 'fido-loading',
+      loading: true,
+      title: 'Authorizing with Passkey',
+      message: 'Displaying Passkey challenge...',
+      autoClose: false,
+      withCloseButton: false,
+    })
 
-  signInWithCustomToken(auth, credAuth.cred)
+    const authentication = await startAuthentication(res.authentication)
+
+    notifications.update({
+      id: 'fido-loading',
+      loading: true,
+      title: 'Authorizing with Passkey',
+      message: 'Sending result to server...',
+      autoClose: false,
+      withCloseButton: false,
+    })
+
+    const credAuth = await fetch(
+      `https://europe-west1-derlev-xyz.cloudfunctions.net/signinResponse?docId=${res.docId}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(authentication),
+      },
+    )
+      .then((res) => res.json())
+      .catch((err) => {
+        throw err
+      })
+
+    notifications.update({
+      id: 'fido-loading',
+      loading: true,
+      title: 'Authorizing with Passkey',
+      message: 'Authenticating with token...',
+      autoClose: false,
+      withCloseButton: false,
+    })
+
+    await signInWithCustomToken(auth, credAuth.cred)
+
+    notifications.update({
+      id: 'fido-loading',
+      message: 'Successfully logged in!',
+      title: 'Logged In',
+      autoClose: true,
+      ...greenCheck,
+    })
+  } catch (err: any) {
+    /* eslint-disable-next-line no-console */
+    console.error(err)
+    notifications.hide('fido-loading')
+    if (err.name !== 'NotAllowedError') {
+      notifications.show({
+        id: 'fido-error',
+        message: 'There was an error authenticating with Passkey',
+        title: 'An error occurred',
+        autoClose: true,
+        ...redX,
+      })
+    }
+  }
 }
 
 export { signInWithOAuth, signInWithPasskey }

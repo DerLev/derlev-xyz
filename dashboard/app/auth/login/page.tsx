@@ -18,12 +18,26 @@ import { useAuth } from 'reactfire'
 import { GoPasskeyFill } from 'react-icons/go'
 import useFidoSupport from '@/lib/useFidoSupport'
 import { HiOutlineInformationCircle } from 'react-icons/hi2'
+import { useState } from 'react'
 
 const Login = () => {
   const { status } = useLoginStatus({ behavior: 'notUser' })
   const auth = useAuth()
   const googleProvider = new GoogleAuthProvider()
   const { fido } = useFidoSupport()
+  const [loading, setLoading] = useState<null | string>(null)
+
+  const googleSignIn = async () => {
+    setLoading('google')
+    await signInWithOAuth(auth, googleProvider).catch(() => setLoading(null))
+    setLoading(null)
+  }
+
+  const fidoSignIn = async () => {
+    setLoading('fido')
+    await signInWithPasskey(auth).catch(() => setLoading('null'))
+    setLoading(null)
+  }
 
   return (
     <Container maw={420} w="100%">
@@ -36,9 +50,11 @@ const Login = () => {
             <Button
               radius="xl"
               variant="default"
-              leftIcon={<GoogleSvg />}
-              onClick={() => signInWithOAuth(auth, googleProvider)}
+              leftIcon={<GoogleSvg colorless={Boolean(loading)} />}
+              onClick={() => googleSignIn()}
               fullWidth
+              loading={loading === 'google'}
+              disabled={Boolean(loading) && loading !== 'google'}
             >
               Google
             </Button>
@@ -51,9 +67,10 @@ const Login = () => {
               radius="xl"
               variant="default"
               leftIcon={<GoPasskeyFill />}
-              onClick={() => signInWithPasskey(auth)}
+              onClick={() => fidoSignIn()}
               fullWidth
-              disabled={!fido}
+              loading={loading === 'fido'}
+              disabled={(Boolean(loading) && loading !== 'fido') || !fido}
             >
               Signin with Passkey
             </Button>

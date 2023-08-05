@@ -39,6 +39,8 @@ import { dateTimeFormatter } from '@/lib/formatters'
 import { openConfirmModal, openContextModal } from '@mantine/modals'
 import firestoreConverter from '@/lib/firestoreConverter'
 import useFidoSupport from '@/lib/useFidoSupport'
+import { notifications } from '@mantine/notifications'
+import { greenCheck, redX } from '@/lib/notificationStyles'
 
 const User = () => {
   const { user } = useLoginStatus({ behavior: 'onlyUser' })
@@ -66,26 +68,75 @@ const User = () => {
 
     setLoading(true)
 
-    const token = await user.getIdToken()
+    try {
+      const token = await user.getIdToken()
 
-    const res = await fetch(
-      'https://europe-west1-derlev-xyz.cloudfunctions.net/registerRequest',
-      { method: 'POST', headers: { Authorization: `Bearer ${token}` } },
-    ).then((res) => res.json())
+      notifications.show({
+        id: 'fido-loading',
+        loading: true,
+        title: 'Authorizing with Passkey',
+        message: 'Loading Passkey challenge...',
+        autoClose: false,
+        withCloseButton: false,
+      })
 
-    const registration = await startRegistration(res.registration)
+      const res = await fetch(
+        'https://europe-west1-derlev-xyz.cloudfunctions.net/registerRequest',
+        { method: 'POST', headers: { Authorization: `Bearer ${token}` } },
+      ).then((res) => res.json())
 
-    await fetch(
-      `https://europe-west1-derlev-xyz.cloudfunctions.net/registerResponse?docId=${res.docId}`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+      notifications.update({
+        id: 'fido-loading',
+        loading: true,
+        title: 'Authorizing with Passkey',
+        message: 'Displaying Passkey challenge...',
+        autoClose: false,
+        withCloseButton: false,
+      })
+
+      const registration = await startRegistration(res.registration)
+
+      notifications.update({
+        id: 'fido-loading',
+        loading: true,
+        title: 'Authorizing with Passkey',
+        message: 'Sending result to server...',
+        autoClose: false,
+        withCloseButton: false,
+      })
+
+      await fetch(
+        `https://europe-west1-derlev-xyz.cloudfunctions.net/registerResponse?docId=${res.docId}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(registration),
         },
-        body: JSON.stringify(registration),
-      },
-    ).then((res) => res.json())
+      ).then((res) => res.json())
+
+      notifications.update({
+        id: 'fido-loading',
+        message: 'Successfully registered this Passkey!',
+        title: 'Registered new Passkey',
+        autoClose: true,
+        ...greenCheck,
+      })
+    } catch (err: any) {
+      /* eslint-disable-next-line no-console */
+      console.error(err)
+      notifications.hide('fido-loading')
+      if (err.name !== 'NotAllowedError') {
+        notifications.show({
+          id: 'fido-error',
+          message: 'There was an error registering a new Passkey',
+          title: 'An error occurred',
+          ...redX,
+        })
+      }
+    }
 
     setLoading(false)
   }

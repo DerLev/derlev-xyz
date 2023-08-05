@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core'
 import { useGluedEmotionCache } from '@/lib/emotionNextjsGlue'
 import { ModalsProvider } from '@mantine/modals'
 import { EditPasskey } from './Modals/index'
+import NotificationsProvider from './NotificationsProvider'
 
 const modals = {
   editPasskey: EditPasskey,
@@ -28,6 +29,7 @@ const EmotionProvider = ({ children }: PropsWithChildren) => {
         colorScheme: 'dark',
       }}
     >
+      <NotificationsProvider />
       <ModalsProvider modals={modals}>{children}</ModalsProvider>
     </MantineProvider>
   )
