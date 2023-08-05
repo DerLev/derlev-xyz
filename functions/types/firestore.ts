@@ -1,7 +1,8 @@
 export interface PasskeyChallengesCollection {
   challenge: string;
   timestamp: import("@google-cloud/firestore").Timestamp;
-  uid: string;
+  uid?: string;
+  action: "register" | "authenticate";
 }
 
 export interface PasskeyCredentialsCollection {

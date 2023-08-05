@@ -12,11 +12,19 @@ import httpAuth from "../../helpers/httpAuth";
 import httpError from "../../helpers/httpError";
 import webauthnConfig from "../../helpers/webauthnConfig";
 
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * Register a new FIDO2 credential (Passkey)
+ * @description this endpoint creates a challenge and sends it for registration
+ */
 export const registerRequest: HttpFunction = async (req, res) => {
+  /* Only allow POST requests */
   allowMethods(req, res, ["POST"]);
 
+  /* Authenticate the user */
   const user = await httpAuth(req, res);
 
+  /* Get all registered FIDO creds of the user */
   const passkeyCredentialsCollection = firestore
     .collection("passkeyCredentials")
     .withConverter(firestoreConverter<PasskeyCredentialsCollection>());
@@ -29,6 +37,7 @@ export const registerRequest: HttpFunction = async (req, res) => {
     },
   );
 
+  /* Create the registration challenge with excluded credentials */
   const registration = generateRegistrationOptions({
     rpID: webauthnConfig.rpID,
     rpName: webauthnConfig.rpName,
@@ -47,18 +56,22 @@ export const registerRequest: HttpFunction = async (req, res) => {
       : [],
   });
 
+  /* Get a Firestore doc for saving the challenge */
   const challengeDoc = firestore
     .collection("passkeyChallenges")
     .withConverter(firestoreConverter<PasskeyChallengesCollection>())
     .doc();
 
   try {
+    /* Save the challenge in the Firestore doc */
     await challengeDoc.create({
       challenge: registration.challenge,
       timestamp: FieldValue.serverTimestamp(),
       uid: user.uid,
+      action: "register",
     });
 
+    /* Send challenge to client */
     return res.status(200).json({registration, docId: challengeDoc.id});
   } catch (err) {
     console.error(err);

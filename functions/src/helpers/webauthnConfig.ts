@@ -1,7 +1,7 @@
 const config = {
-  rpID: "localhost",
+  rpID: "admin.derlev.xyz",
   rpName: "derlev.xyz",
-  origin: "http://localhost:3000",
+  origin: "https://admin.derlev.xyz",
 };
 
 export default config;

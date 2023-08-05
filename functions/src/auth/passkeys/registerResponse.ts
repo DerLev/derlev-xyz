@@ -22,11 +22,19 @@ const registerResponseQueryParams = Joi.object<RegisterResponseQueryParams>({
   docId: Joi.string().required(),
 }).unknown(true);
 
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * Register a new FIDO2 credential (Passkey)
+ * @description this endpoint saves the pubkey from the completed registration in Firestore
+ */
 export const registerResponse: HttpFunction = async (req, res) => {
+  /* Only allow HTTP POST */
   allowMethods(req, res, ["POST"]);
 
+  /* Authenticate the user */
   const user = await httpAuth(req, res);
 
+  /* Validate the query params */
   const {value: query, error} = registerResponseQueryParams.validate(req.query);
   if (error)
     return httpError(res, "invalid-argument", error.details[0].message);
@@ -34,31 +42,39 @@ export const registerResponse: HttpFunction = async (req, res) => {
   const credential: RegistrationResponseJSON = req.body;
 
   try {
+    /* Get the registration challenge from Firestore */
     const passkeyChallengeDoc = firestore
       .collection("passkeyChallenges")
       .withConverter(firestoreConverter<PasskeyChallengesCollection>())
       .doc(query.docId);
     const passkeyChallengeData = (await passkeyChallengeDoc.get()).data();
 
-    if (!passkeyChallengeData) return httpError(res, "internal");
+    /* Error if challenge does not exist, is not for registration, or not from the current user */
+    if (!passkeyChallengeData || passkeyChallengeData.action !== "register")
+      return httpError(res, "invalid-argument");
     if (passkeyChallengeData.uid !== user.uid)
       return httpError(res, "unauthenticated");
 
+    /* Verify the newly registered FIDO credential */
     const {verified, registrationInfo} = await verifyRegistrationResponse({
       expectedChallenge: passkeyChallengeData.challenge,
       expectedRPID: webauthnConfig.rpID,
       response: credential,
       expectedOrigin: webauthnConfig.origin,
+      requireUserVerification: true,
     });
 
+    /* Fail if verification failes */
     if (!verified || !registrationInfo)
       return httpError(res, "invalid-argument");
 
+    /* Get a Firestore doc for the new FIDO cred */
     const passkeyCredentialDoc = firestore
       .collection("passkeyCredentials")
       .withConverter(firestoreConverter<PasskeyCredentialsCollection>())
       .doc(credential.id);
 
+    /* Save the pubkey and counter in Firestore */
     await passkeyCredentialDoc.create({
       counter: registrationInfo.counter,
       credId: credential.id,
@@ -69,8 +85,10 @@ export const registerResponse: HttpFunction = async (req, res) => {
       credIdBytes: registrationInfo.credentialID,
     });
 
+    /* Delete the registration challenge */
     await passkeyChallengeDoc.delete();
 
+    /* Send 200 OK to client */
     return res
       .status(200)
       .json({code: 200, message: "Credential successfully added!"});
