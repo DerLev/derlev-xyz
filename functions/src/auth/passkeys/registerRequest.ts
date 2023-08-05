@@ -5,15 +5,19 @@ import {generateRegistrationOptions} from "@simplewebauthn/server";
 import firestoreConverter from "../../helpers/firestoreConverter";
 import type {PasskeyChallengesCollection} from "../../../types/firestore";
 import {FieldValue} from "@google-cloud/firestore";
+import httpAuth from "../../helpers/httpAuth";
+import httpError from "../../helpers/httpError";
 
 export const registerRequest: HttpFunction = async (req, res) => {
   allowMethods(req, res, ["POST"]);
 
+  const user = await httpAuth(req, res);
+
   const registration = generateRegistrationOptions({
     rpID: "admin.derlev.xyz",
     rpName: "derlev.xyz",
-    userID: "DFclDkv7eGSL3LiKx3zh5Rb9LjD3",
-    userName: "Levin Schroeren",
+    userID: user.uid,
+    userName: user.email || user.uid,
     attestationType: "none",
     authenticatorSelection: {
       residentKey: "required",
@@ -30,10 +34,11 @@ export const registerRequest: HttpFunction = async (req, res) => {
     await challengeDoc.create({
       challenge: registration.challenge,
       timestamp: FieldValue.serverTimestamp(),
+      uid: user.uid,
     });
 
     return res.status(200).json({registration, docId: challengeDoc.id});
   } catch (err) {
-    return res.status(500).json({code: 500, message: JSON.stringify(err)});
+    return httpError(res, "internal");
   }
 };
