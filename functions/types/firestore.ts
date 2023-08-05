@@ -3,3 +3,13 @@ export interface PasskeyChallengesCollection {
   timestamp: import("@google-cloud/firestore").Timestamp;
   uid: string;
 }
+
+export interface PasskeyCredentialsCollection {
+  uid: string;
+  timestamp: import("@google-cloud/firestore").Timestamp;
+  credId: string;
+  credIdBytes: Uint8Array;
+  credPublicKey: Uint8Array;
+  counter: number;
+  name: string;
+}
