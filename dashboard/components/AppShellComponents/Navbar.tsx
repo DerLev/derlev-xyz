@@ -2,9 +2,17 @@
 
 import { Navbar as MantineNavbar, ScrollArea } from '@mantine/core'
 
-const Navbar = () => {
+interface NavbarProps {
+  mobileNavOpen: boolean
+}
+
+const Navbar = ({ mobileNavOpen }: NavbarProps) => {
   return (
-    <MantineNavbar width={{ base: 300 }} p="xs">
+    <MantineNavbar
+      width={{ sm: 300 }}
+      p="xs"
+      display={{ base: mobileNavOpen ? 'block' : 'none', sm: 'block' }}
+    >
       <MantineNavbar.Section
         grow
         component={ScrollArea}

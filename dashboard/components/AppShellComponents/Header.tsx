@@ -3,6 +3,7 @@
 import useLoginStatus from '@/lib/useLoginStatus'
 import {
   Anchor,
+  Burger,
   Button,
   Group,
   Header as MantineHeader,
@@ -14,15 +15,28 @@ import {
   HiOutlineArrowRightOnRectangle,
 } from 'react-icons/hi2'
 
-const Header = () => {
+interface HeaderProps {
+  mobileNavOpen: boolean
+  toggleMobileNav: () => void
+}
+
+const Header = ({ mobileNavOpen, toggleMobileNav }: HeaderProps) => {
   const { signedIn } = useLoginStatus()
 
   return (
     <MantineHeader height={60} px="md">
       <Group position="apart" h="100%">
-        <Anchor component={Link} href="/" color="dark.0">
-          <Title>derlev.xyz</Title>
-        </Anchor>
+        <Group spacing="xs">
+          <Burger
+            opened={mobileNavOpen}
+            onClick={() => toggleMobileNav()}
+            size="sm"
+            display={{ base: 'block', sm: 'none' }}
+          />
+          <Anchor component={Link} href="/" color="dark.0">
+            <Title size="h2">derlev.xyz</Title>
+          </Anchor>
+        </Group>
         <Group position="right">
           {signedIn === true ? (
             <Button
