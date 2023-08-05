@@ -3,6 +3,18 @@
 import type { PropsWithChildren } from 'react'
 import { MantineProvider } from '@mantine/core'
 import { useGluedEmotionCache } from '@/lib/emotionNextjsGlue'
+import { ModalsProvider } from '@mantine/modals'
+import { EditPasskey } from './Modals/index'
+
+const modals = {
+  editPasskey: EditPasskey,
+}
+
+declare module '@mantine/modals' {
+  export interface MantineModalsOverride {
+    modals: typeof modals
+  }
+}
 
 const EmotionProvider = ({ children }: PropsWithChildren) => {
   const cache = useGluedEmotionCache()
@@ -16,7 +28,7 @@ const EmotionProvider = ({ children }: PropsWithChildren) => {
         colorScheme: 'dark',
       }}
     >
-      {children}
+      <ModalsProvider modals={modals}>{children}</ModalsProvider>
     </MantineProvider>
   )
 }
