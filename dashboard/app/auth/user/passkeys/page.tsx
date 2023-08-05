@@ -144,6 +144,7 @@ const User = () => {
                   >
                     <Text>{cred.name}</Text>
                     <Text size="sm" color="dimmed">
+                      Created:{' '}
                       {dateTimeFormatter.format(cred.timestamp.toDate())}
                     </Text>
                   </Box>
