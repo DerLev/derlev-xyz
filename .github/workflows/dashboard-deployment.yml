@@ -145,7 +145,7 @@ jobs:
             type=raw,value=latest
             type=sha,prefix=,format=long
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: dashboard/
           push: true
