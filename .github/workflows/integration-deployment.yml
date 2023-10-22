@@ -211,7 +211,7 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
       - name: Extract Metadata for Docker
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.HOME_CONTAINER_REGISTRY_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.HOME_CONTAINER_REGISTRY }}/${{ env.HOME_CONTAINER_NAME }}
           tags: |
@@ -364,7 +364,7 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
       - name: Extract Metadata for Docker
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.DASH_CONTAINER_REGISTRY_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.DASH_CONTAINER_REGISTRY }}/${{ env.DASH_CONTAINER_NAME }}
           tags: |
