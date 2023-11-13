@@ -168,7 +168,7 @@ jobs:
           access_token_lifetime: 60s
           create_credentials_file: false
       - name: Only leave the 2 most recent Revisions
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const response = await fetch("https://run.googleapis.com/v2/projects/${{ vars.GCP_PROJECT_ID }}/locations/${{ env.HOME_CR_LOCATION }}/services/${{ env.HOME_CR_SERVICE }}/revisions", { headers: { 'Authorization': "Bearer ${{ steps.auth.outputs.access_token }}" } })
@@ -230,7 +230,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
       - name: Get short commit SHA
         id: commit_sha
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const sha = "${{ github.sha }}"
@@ -321,7 +321,7 @@ jobs:
           access_token_lifetime: 60s
           create_credentials_file: false
       - name: Only leave the 2 most recent Revisions
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const response = await fetch("https://run.googleapis.com/v2/projects/${{ vars.GCP_PROJECT_ID }}/locations/${{ env.DASH_CR_LOCATION }}/services/${{ env.DASH_CR_SERVICE }}/revisions", { headers: { 'Authorization': "Bearer ${{ steps.auth.outputs.access_token }}" } })
@@ -383,7 +383,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
       - name: Get short commit SHA
         id: commit_sha
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const sha = "${{ github.sha }}"
