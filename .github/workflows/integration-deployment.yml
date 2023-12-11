@@ -227,7 +227,7 @@ jobs:
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ env.HOME_CONTAINER_NAME }}
           cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ env.HOME_CONTAINER_NAME }}
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+        uses: google-github-actions/setup-gcloud@v2
       - name: Get short commit SHA
         id: commit_sha
         uses: actions/github-script@v7
@@ -380,7 +380,7 @@ jobs:
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ env.DASH_CONTAINER_NAME }}
           cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ env.DASH_CONTAINER_NAME }}
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+        uses: google-github-actions/setup-gcloud@v2
       - name: Get short commit SHA
         id: commit_sha
         uses: actions/github-script@v7
