@@ -1,12 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require('tailwindcss/colors')
-
-export default {
-  content: [
-    './layouts/**/*.html',
-    './content/**/*.{html,md}',
-    './app/**/*.tsx',
-  ],
+module.exports = {
+  content: [],
   theme: {
     extend: {
       colors: {
@@ -16,10 +10,7 @@ export default {
           500: '#7d7d7d',
           900: '#050505',
         },
-        background: {
-          dark: '#050505',
-          light: '#fafafa',
-        },
+        background: '#050505',
         primary: {
           50: '#f1e6ff',
           100: '#d4b3ff',
@@ -45,15 +36,12 @@ export default {
           800: '#03492d',
           900: '#01180f',
         },
-      },
+      }
     },
     fontFamily: {
       display: ['"Space Grotesk"', 'sans-serif'],
       body: ['"Space Grotesk"', 'sans-serif'],
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [],
 }
-

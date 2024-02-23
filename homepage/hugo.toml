@@ -1,8 +1,0 @@
-baseURL = 'https://derlev.xyz/'
-languageCode = 'en-us'
-title = 'DerLev'
-
-disableKinds = ["RSS"]
-
-[markup.goldmark.renderer]
-  unsafe = true
