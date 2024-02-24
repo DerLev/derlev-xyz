@@ -1,7 +1,30 @@
 {{ define "main" }}
       <main class="relative flex grow flex-col">
         <div class="flex grow flex-col items-center justify-center gap-4" id="home">
-          <h1 class="text-center font-semibold text-3xl">Hi, my name is <span class="derlev-gradient">DerLev</span>!</h1>
+          {{- $image_url := "/images/derlev-profile.webp" -}}
+          {{- $image := resources.Get $image_url -}}
+          {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image.Width $image.Height)) -}}
+          {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (math.Div $image.Width 2) (math.Div $image.Height 2))) -}}
+          {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d jpg q90" $image.Width $image.Height)) -}}
+          <picture>
+            <source srcset="{{ $image_webp_small }}, {{ $image_webp }} 2x" type="image/webp">
+            <source srcset="{{ $image_jpg }}" type="image/jpeg">
+            <img class="derlev-profile" src="{{ $image_jpg }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="DerLev Profile">
+          </picture>
+          <h1 class="text-center font-semibold text-4xl">Hi, my name is <span class="derlev-gradient">DerLev</span>!</h1>
+          <div class="text-stack">
+            <p class="subheading">I do web development and homelabbing</p>
+            <p class="blog-cta">Look at my blog for my dev diaries and findings</p>
+          </div>
+          <a href="/blog" class="blog-button">
+            {{- "assets/icons/Bars3-BL.svg" | readFile | safeHTML -}}
+            <span>Blog</span>
+          </a>
+          <div class="flex py-2 items-center w-full max-w-xs">
+            <div class="grow border-t border-text-500 rounded-full"></div>
+            <div class="mx-4 text-text-500">Other links</div>
+            <div class="grow border-t border-text-500"></div>
+          </div>
           <div class="socials-stack">
             <a
               class="socials-button"

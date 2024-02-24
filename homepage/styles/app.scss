@@ -20,17 +20,5 @@ body {
 }
 
 #home {
-  .derlev-gradient {
-    --tw-gradient-from-position: 25%;
-    --tw-gradient-to-position: 70%;
-    @apply bg-gradient-to-tr from-primary-400 to-accent-500 bg-clip-text text-transparent;
-  }
-
-  .socials-stack {
-    @apply flex w-full flex-col items-center gap-2 px-4;
-  }
-
-  .socials-button {
-    @apply flex w-full max-w-xs items-center justify-center gap-2 rounded-md border-2 border-primary-400 py-0.5 px-2 transition hover:border-primary-500 active:translate-y-0.5 active:transform;
-  }
+  @import './home.scss';
 }
