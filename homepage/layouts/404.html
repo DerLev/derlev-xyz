@@ -4,17 +4,20 @@
 
 {{ define "main"}}
 <!-- <main class="prose dark:prose-invert min-w-full text-center"> -->
-<main>
-  <!-- <h1 class="text-5xl mt-12">404 Not Found</h1> -->
-  <h1>404 Not Found</h1>
-
-  <!-- <div class="mx-auto w-24 h-1 my-12 bg-gradient-to-r from-red-600 to-red-400 rounded-full"></div> -->
-  <div></div>
-  <p>Congrats, you just found the bongo moth!</p>
-  <!-- <img class="mx-auto" src="/img/bug.gif" alt="bongo moth"> -->
-  <!-- <a class="btn" href="/">Go Home</a> -->
-  <a href="/">Go Home</a>
-</main>
+        <main>
+          <div class="flex grow flex-col items-center justify-center gap-4 p-2">
+            <!-- <h1 class="text-5xl mt-12">404 Not Found</h1> -->
+            <h1 class="text-5xl text-center font-semibold"><span class="text-text-300">404</span> Not Found</h1>
+  
+            <!-- <div class="mx-auto w-24 h-1 my-12 bg-gradient-to-r from-red-600 to-red-400 rounded-full"></div> -->
+            <div class="w-full max-w-md h-0.5 bg-text-500 rounded-full"></div>
+            <!-- <img class="mx-auto" src="/img/bug.gif" alt="bongo moth"> -->
+            <!-- <a class="btn" href="/">Go Home</a> -->
+            <a href="/" class="mt-4 link-underline">
+              <span>Go Home</span>
+            </a>
+          </div>
+        </main>
 
 {{ end }}
 
