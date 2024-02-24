@@ -11,6 +11,14 @@ body {
   min-height: 100dvh;
 }
 
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -.125em;
+  color: inherit;
+  fill: currentColor;
+}
+
 #home {
   .derlev-gradient {
     --tw-gradient-from-position: 25%;

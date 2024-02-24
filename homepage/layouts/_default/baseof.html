@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>{{ .Page.Title }}</title>
-    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -29,15 +29,15 @@
   </head>
   <body>
     <div class="content-wrapper">
-      {{ block "header" . }}
+      {{- block "header" . -}}
       <!-- navbar -->
-      {{ end }}
-      {{ block "main" . }}
-        <!-- main -->
-      {{ end }}
-      {{ block "footer" . }}
-        <!-- footer -->
-      {{ end }}
+      {{- end -}}
+      {{- block "main" . -}}
+      <!-- main -->
+      {{- end -}}
+      {{- block "footer" . -}}
+      <!-- footer -->
+      {{- end -}}
     </div>
   </body>
 </html>
