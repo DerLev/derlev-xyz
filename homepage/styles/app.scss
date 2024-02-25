@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  @apply bg-primary-500 text-text-100;
+}
+
 body {
-  @apply bg-background-dark text-text-100 antialiased font-body;
+  @apply text-text-100 antialiased font-body;
+  // @apply bg-background-dark;
+  background: rgba($color: #050505, $alpha: .95) url(/styling/noise.svg);
+  background-size: 200px 200px;
+  background-repeat: repeat;
 }
 
 .content-wrapper {
