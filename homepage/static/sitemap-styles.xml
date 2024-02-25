@@ -87,6 +87,15 @@
             line-height: 1.25rem;
           }
 
+          .url-anchor {
+            font-family: monospace;
+            color: #4f46e5;
+          }
+
+          .url-anchor:hover {
+            color: #4338ca;
+          }
+
           .url-lastmod, .url-changefreq {
             font-style: italic;
           }
@@ -105,7 +114,7 @@
               <xsl:for-each select="sitemap:urlset/sitemap:url">
                 <li>
                   <div class="li-wrapper">
-                    <code><xsl:value-of select="sitemap:loc" /></code>
+                    <a href="{sitemap:loc}" class="url-anchor"><xsl:value-of select="sitemap:loc" /></a>
                     <div class="li-info">Last updated on <span class="url-lastmod"><xsl:value-of select="sitemap:lastmod" /></span>, Updates <span class="url-changefreq"><xsl:value-of select="sitemap:changefreq" /></span></div>
                   </div>
                 </li>
