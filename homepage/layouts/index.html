@@ -1,6 +1,6 @@
 {{ define "main" }}
       <main>
-        <div class="flex grow flex-col items-center justify-center gap-4" id="home">
+        <div class="flex grow flex-col items-center justify-center gap-4 pt-4" id="home">
           {{- $image_url := "/images/derlev-profile.webp" -}}
           {{- $image := resources.Get $image_url -}}
           {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image.Width $image.Height)) -}}

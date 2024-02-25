@@ -2,11 +2,16 @@
   {{ partial "topnav" }}
 {{ end }}
 {{ define "main" }}
-  <h1>List</h1>
-  {{ range .Pages }}
-    <article>
-      <h2>{{ .Title }}</h2>
-      {{ .Content }}
-    </article>  
-  {{ end }}
+  <main>
+    <h1>List</h1>
+    {{ range .Pages }}
+      <article>
+        <h2>{{ .Title }}</h2>
+        {{ .Content }}
+      </article>  
+    {{ end }}
+  </main>
+{{ end }}
+{{ define "footer" }}
+  {{ partial "footer" . }}
 {{ end }}

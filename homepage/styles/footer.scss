@@ -1,0 +1,35 @@
+footer.app-footer {
+  @apply p-4 mb-8 flex flex-col items-center gap-2;
+
+  .divider {
+    @apply h-0.5 bg-text-500 rounded-full w-24 mb-4;
+  }
+
+  .fix-wrapper {
+    @apply flex items-center justify-center gap-x-2 flex-wrap;
+
+    .fix-text {
+      @apply text-text-300;
+    }
+
+    .fix-link {
+      @apply text-primary-200 hover:text-primary-300 transition;
+    }
+  }
+
+  .footer-links {
+    @apply flex items-center;
+
+    a {
+      @apply px-3 border-l border-text-300 text-text-300 hover:text-text-100 transition;
+    }
+
+    a:first-child {
+      @apply border-0;
+    }
+  }
+
+  .copyright {
+    @apply text-xs text-text-500;
+  }
+}

@@ -1,2 +1,17 @@
-    <footer></footer>
+    <footer class="app-footer">
+      <div class="divider"></div>
+      <div class="fix-wrapper">
+        <p class="fix-text">Found an issue with this page?</p>
+        <a href="https://github.com/DerLev/derlev-xyz/tree/main/homepage/content/{{ with .File }}{{ .Path }}{{ end }}" class="fix-link" rel="noopener noreferrer">
+          Fix it on GitHub
+        </a>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/imprint">Imprint</a>
+      </div>
+      <p class="copyright">Copyright &copy; {{ now.Year }} DerLev</p>
+    </footer>
 {{- "" -}}

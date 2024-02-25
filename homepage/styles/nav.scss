@@ -1,0 +1,49 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+nav {
+  @apply flex justify-between items-center p-6 md:p-8 z-50 sticky w-full;
+
+  &.scrolled {
+    @apply bg-background-light/5 backdrop-blur top-0 py-3;
+    animation: fadeIn 150ms ease forwards;
+  }
+
+  .nav-main {
+    @apply flex items-center gap-4;
+  
+    span {
+      --tw-gradient-from-position: 25%;
+      --tw-gradient-to-position: 75%;
+      @apply text-2xl font-semibold hidden md:block bg-gradient-to-b from-text-100 to-text-300 bg-clip-text text-transparent;
+    }
+    
+    &:hover span {
+      @apply from-primary-400 to-accent-500;
+    }
+
+    .nav-main-img {
+      height: 3rem;
+      width: auto;
+    }
+
+    &:hover .nav-main-img {
+      filter: brightness(1.1);
+    }
+  }
+
+  .nav-right {
+    @apply flex items-center gap-6 md:gap-10;
+
+    a {
+      @apply font-semibold text-text-300 hover:text-text-100 transition text-xl hover:scale-105 transform;
+    }
+  }
+}
