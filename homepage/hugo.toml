@@ -4,6 +4,11 @@ title = 'DerLev'
 
 disableKinds = ["RSS"]
 disableHugoGeneratorInject = true
+enableRobotsTXT = true
+
+[sitemap]
+  changeFreq = 'weekly'
+  priority = 1
 
 [markup.goldmark.renderer]
   unsafe = true
