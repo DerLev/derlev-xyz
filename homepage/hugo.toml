@@ -10,5 +10,8 @@ enableRobotsTXT = true
   changeFreq = 'weekly'
   priority = 1
 
+[taxonomies]
+  tag = 'tags'
+
 [markup.goldmark.renderer]
   unsafe = true
