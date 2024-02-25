@@ -9,10 +9,10 @@
 }
 
 nav {
-  @apply flex justify-between items-center p-6 md:p-8 z-50 sticky w-full;
+  @apply flex justify-between items-center px-6 py-3 my-3 md:px-8 md:my-5 z-50 sticky w-full;
 
   &.scrolled {
-    @apply bg-background-light/5 backdrop-blur top-0 py-3;
+    @apply bg-background-light/5 backdrop-blur top-0;
     animation: fadeIn 150ms ease forwards;
   }
 

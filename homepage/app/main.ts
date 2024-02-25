@@ -1,30 +1,51 @@
 import '../styles/app.scss'
 
 import flamethrower from 'flamethrower-router'
+import store, { isLoading, notLoading } from './store'
 
 export const router = flamethrower({ prefetch: 'hover', log: false })
 
-/* Intersection Observer for popping out navbar when scrolled */
-const observerCallback: IntersectionObserverCallback = (entries) => {
-  const visible = entries[0].isIntersecting
-  const navBar = document.querySelector("nav")
-  if(!navBar) return
+export * from './components/NavProgress'
 
-  if(visible) navBar.classList.remove("scrolled")
-  else navBar.classList.add("scrolled")
-}
-
-const observer = new IntersectionObserver(observerCallback, {
-  root: document.body,
-  rootMargin: '0px',
-  threshold: 1,
+window.addEventListener('flamethrower:router:fetch', () => {
+  store.dispatch(isLoading())
 })
 
-/* Add observer when HTML has loaded */
-window.addEventListener("load", () => {
-  const contentBegin = document.querySelector("div#content-begin")
+window.addEventListener('flamethrower:router:end', () => {
+  setTimeout(() => {
+    store.dispatch(notLoading())
+  }, 450)
+})
 
-  if(contentBegin) {
-    observer.observe(contentBegin)
+/* Using window scroll to pop out navbar */
+
+let navbarHeight: number
+
+const getNavbarHeight = () => {
+  const navBar = document.querySelector("nav")
+  
+  if(navBar && !navBar.classList.contains("scrolled")) {
+    navbarHeight = navBar.offsetHeight
   }
+}
+
+const addBodyScrollListener = () => {
+  document.body.addEventListener("scroll", () => {
+    const bodyScroll = document.body.scrollTop
+    const navBar = document.querySelector("nav")
+
+    if(!navBar) return
+
+    if(bodyScroll >= navbarHeight) navBar.classList.add("scrolled")
+    else navBar.classList.remove("scrolled")
+  })
+}
+
+window.addEventListener("load", () => {
+  getNavbarHeight()
+  addBodyScrollListener()
+})
+window.addEventListener("flamethrower:router:end", () => {
+  getNavbarHeight()
+  addBodyScrollListener()
 })

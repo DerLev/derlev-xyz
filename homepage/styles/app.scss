@@ -31,6 +31,46 @@ body {
   @import './footer.scss';
 }
 
+@keyframes navProgress {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes navLoaderPulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+.nav-loader {
+  @apply fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-accent-500 transition-opacity opacity-0;
+  animation: fadeOut 150ms ease forwards;
+
+  &.active {
+    @apply transition-none opacity-100;
+    animation: navProgress 300ms ease forwards, navLoaderPulse 2s ease 450ms infinite;
+  }
+}
+
 .icon {
   width: 1em;
   height: 1em;
