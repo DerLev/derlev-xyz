@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './animations.scss';
+
 ::selection {
   @apply bg-primary-500 text-text-100;
 }
@@ -29,36 +31,6 @@ body {
 
   @import './nav.scss';
   @import './footer.scss';
-}
-
-@keyframes navProgress {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes navLoaderPulse {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: .5;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-  }
 }
 
 .nav-loader {
@@ -95,4 +67,26 @@ body {
 
 #home {
   @import './home.scss';
+}
+
+.cookies {
+  @apply fixed bottom-0 w-full backdrop-blur bg-background-light/5 py-4 px-6 flex justify-center items-center;
+  opacity: 0;
+  animation: fadeIn 300ms ease 300ms forwards;
+
+  .cc-content-wrapper {
+    @apply w-full max-w-xl flex flex-col text-text-300;
+  }
+
+  .cc-title {
+    @apply font-medium text-text-100;
+  }
+
+  .cc-text {
+    @apply text-sm;
+  }
+
+  .cc-button {
+    @apply mt-2 px-2 w-max border border-text-100 text-text-100 hover:bg-text-100/10 transition active:bg-text-100/20 rounded;
+  }
 }

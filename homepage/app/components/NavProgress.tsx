@@ -9,7 +9,7 @@ const NavProgress = () => {
     const currentStore = store.getState()
     const routeLoading = currentStore.routeLoading.value
 
-    if(routeLoading !== show) setShow(routeLoading)
+    if (routeLoading !== show) setShow(routeLoading)
   }
 
   useEffect(() => {
@@ -19,12 +19,11 @@ const NavProgress = () => {
     store.subscribe(dispatchCallback)
   }, [])
 
-  return (
-    <div className={`nav-loader ${show ? 'active' : ''}`}></div>
-  )
+  return <div className={`nav-loader ${show ? 'active' : ''}`}></div>
 }
 
 export default NavProgress
 
 const WebNavProgress = r2wc(NavProgress)
-window.customElements.get("nav-progress") || window.customElements.define("nav-progress", WebNavProgress)
+window.customElements.get('nav-progress') ||
+  window.customElements.define('nav-progress', WebNavProgress)
