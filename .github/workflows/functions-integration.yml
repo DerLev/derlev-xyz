@@ -38,7 +38,7 @@ jobs:
         run: yarn tsc --noEmit > typescript.log
         continue-on-error: true
       - name: Annotate Code
-        uses: DerLev/eslint-annotations@v1
+        uses: DerLev/eslint-annotations@v2
         with:
           eslint-report: functions/eslint_report.json
           typescript-log: functions/typescript.log
