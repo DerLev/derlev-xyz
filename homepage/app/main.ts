@@ -7,6 +7,7 @@ export const router = flamethrower({ prefetch: 'hover', log: false })
 
 export * from './components/NavProgress'
 export * from './components/CookieConsent'
+export * from './components/CopyCode'
 
 window.addEventListener('flamethrower:router:fetch', () => {
   store.dispatch(isLoading())
@@ -30,23 +31,27 @@ const getNavbarHeight = () => {
   }
 }
 
-const addBodyScrollListener = () => {
-  document.body.addEventListener('scroll', () => {
-    const bodyScroll = document.body.scrollTop
-    const navBar = document.querySelector('nav')
+const bodyScrollListenerCallback = () => {
+  const bodyScroll = document.body.scrollTop
+  const navBar = document.querySelector('nav')
 
-    if (!navBar) return
+  if (!navBar) return
 
-    if (bodyScroll >= navbarHeight) navBar.classList.add('scrolled')
-    else navBar.classList.remove('scrolled')
-  })
+  if (bodyScroll >= navbarHeight) navBar.classList.add('scrolled')
+  else navBar.classList.remove('scrolled')
 }
 
 window.addEventListener('load', () => {
   getNavbarHeight()
-  addBodyScrollListener()
+  bodyScrollListenerCallback()
+  document.body.addEventListener('scroll', () => {
+    bodyScrollListenerCallback()
+  })
 })
 window.addEventListener('flamethrower:router:end', () => {
   getNavbarHeight()
-  addBodyScrollListener()
+  bodyScrollListenerCallback()
+  document.body.addEventListener('scroll', () => {
+    bodyScrollListenerCallback()
+  })
 })

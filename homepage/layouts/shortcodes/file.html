@@ -1,0 +1,10 @@
+{{ $icon := "assets/icons/Bars3-BL.svg" }}
+
+{{ $icon_selected := (print "assets/icons/" (.Get 0) ".svg") }}
+{{ if ($icon_selected | readFile)}}
+  {{ $icon = $icon_selected }}
+{{ end }}
+
+<div class="file-name">
+  <span class="file-icon">{{ $icon | readFile | safeHTML }}</span> {{ (.Get 1)}}
+</div>

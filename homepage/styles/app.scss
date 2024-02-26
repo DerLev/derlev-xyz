@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import './animations.scss';
+@import './syntax.scss';
 
 ::selection {
   @apply bg-primary-500 text-text-100;
@@ -48,7 +49,7 @@ body {
   height: 1em;
   vertical-align: -.125em;
   color: inherit;
-  fill: currentColor;
+  // fill: currentColor;
 }
 
 .link-underline {
@@ -70,7 +71,7 @@ body {
 }
 
 .cookies {
-  @apply fixed bottom-0 w-full backdrop-blur bg-background-light/5 py-4 px-6 flex justify-center items-center;
+  @apply fixed bottom-0 w-full backdrop-blur bg-background-light/5 py-4 px-6 flex justify-center items-center z-50;
   opacity: 0;
   animation: fadeIn 300ms ease 300ms forwards;
 
@@ -88,5 +89,27 @@ body {
 
   .cc-button {
     @apply mt-2 px-2 w-max border border-text-100 text-text-100 hover:bg-text-100/10 transition active:bg-text-100/20 rounded;
+  }
+}
+
+.single-content {
+  @apply w-full max-w-5xl self-center px-4 prose prose-invert prose-neutral prose-li:m-0;
+}
+
+.file-name {
+  @apply border-2 border-b-0 border-text-500/35 bg-background-dark inline-flex items-center py-2 px-4 gap-2 text-text-300 text-sm z-40;
+  position: relative;
+  bottom: -2px;
+
+  .file-icon {
+    @apply text-lg;
+  }
+}
+
+.copy-code-button {
+  @apply absolute top-0 right-0 m-2 text-text-500;
+
+  &.copied {
+    @apply text-green-500;
   }
 }
