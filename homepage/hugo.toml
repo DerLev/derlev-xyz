@@ -1,10 +1,15 @@
 baseURL = 'https://derlev.xyz/'
 languageCode = 'en-us'
 title = 'DerLev'
+copyright = 'DerLev'
+timezone = 'Europe/Berlin'
 
 disableKinds = ["RSS"]
 disableHugoGeneratorInject = true
 enableRobotsTXT = true
+
+enableEmoji = true
+enableGitInfo = true
 
 [sitemap]
   changeFreq = 'weekly'
