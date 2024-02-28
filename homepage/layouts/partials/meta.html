@@ -7,6 +7,7 @@
 {{ $img = "/favicons/derlev-opg.webp" }}
 {{ $og_type := .Param "og-type" | default "article" }}
 {{ $description := .Description | default .Summary }}
+{{ $index := .Params.index | default true }}
 
 
     <link rel="canonical" href="{{ .Permalink | absURL }}" />
@@ -43,4 +44,8 @@
     <meta name="twitter:title" content="{{ .Title }}">
     <meta name="twitter:description" content="{{ $description }}">
     <meta name="twitter:image" content="{{ $img | absURL }}">
+
+    {{ if eq $index false }}
+    <meta name="robots" content="noindex, nofollow">
+    {{ end }}
 {{- "" -}}

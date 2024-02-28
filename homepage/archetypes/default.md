@@ -5,6 +5,5 @@ draft: true
 description: ''
 sitemap:
   changeFreq: weekly
-params:
-  og-type: website
+og-type: website
 ---
