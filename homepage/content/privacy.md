@@ -36,6 +36,15 @@ how to block their creation:
 
 ## Services used
 
+### Google Fonts
+
+To display awesome fonts like this one this site uses Google Fonts. The fonts 
+are loaded through CSS files from the Google Fonts API, hence no JavaScript from 
+Google is running in the viewers' browsers.
+
+Further reading:
+https://developers.google.com/fonts/faq/privacy
+
 ### Google Firebase Hosting
 
 This website is hosted on Google's Firebase. Therefore Google, the Google Cloud, 
