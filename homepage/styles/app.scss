@@ -92,9 +92,55 @@ body {
   }
 }
 
-.single-content {
-  @apply w-full max-w-5xl self-center px-4 prose prose-invert prose-neutral prose-li:m-0;
+@mixin markdownContent {
+  @apply prose prose-invert prose-neutral prose-li:m-0 max-w-none;
   @apply prose-code:before:content-none prose-code:after:content-none prose-code:bg-background-dark prose-code:px-1 prose-code:py-0.5 prose-code:rounded;
+}
+
+.single-content {
+  @include markdownContent();
+  @apply w-full max-w-5xl self-center px-4;
+}
+
+article {
+  @apply w-full max-w-5xl self-center px-4 flex flex-col gap-10;
+
+  header {
+    @apply flex flex-col gap-4 w-full;
+
+    .header-image {
+      @apply w-full max-h-72 h-full object-cover object-center self-center flex justify-center items-center overflow-hidden rounded shadow-xl;
+    }
+
+    > h1 {
+      @apply md:text-5xl text-4xl font-bold bg-gradient-to-t from-text-300 to-text-100 bg-clip-text text-transparent;
+    }
+
+    .article-info {
+      @apply flex md:justify-between md:items-center flex-col md:flex-row gap-2 bg-text-900 rounded py-1 px-3;
+
+      .author-link {
+        @apply relative text-primary-50 hover:text-primary-100 transition;
+      }
+
+      .tags {
+        @apply flex gap-x-2 gap-y-1 items-center flex-wrap max-w-96 w-full md:justify-end justify-start;
+
+        > a {
+          @apply bg-text-500/20 rounded px-0.5 hover:scale-105 transition;
+
+          &::before {
+            content: "#";
+            @apply text-text-300 mr-0.5 italic;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    @include markdownContent();
+  }
 }
 
 .file-name {

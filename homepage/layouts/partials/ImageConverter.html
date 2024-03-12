@@ -2,12 +2,17 @@
 {{ $image := "/images/placeholder.png" }} 
 
 {{/* Step 2: now check if passed image exists with same as title */}}
-{{ $image_url := resources.Get .ImageSrc }}
 {{ $img_param := .ImgParam }}
+
+{{/*  check if imige is in global resssources or page scoped ressources  */}}
+{{ $image_url := .Page.Resources.Get .ImageSrc }}
+{{ if not $image_url }}
+  {{ $image_url = resources.Get .ImageSrc }}
+{{ end }}
 
 {{ if $image_url }} 
     {{/* Resize and convert the image  */}}
-    {{ $image_url = $image_url.Resize  $img_param }}
+    {{ $image_url = $image_url.Resize $img_param }}
     {{ $image = $image_url.RelPermalink }}             
 {{end}}
 

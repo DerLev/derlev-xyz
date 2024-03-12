@@ -1,0 +1,53 @@
+{{ define "header" }}
+  {{ partial "topnav" }}
+{{ end }}
+{{ define "main" }}
+  <main>
+    <article>
+      <header>
+        {{ $thumbnail := "img/thumbnail.png" }}
+        {{ $thumbnail_file := .Resources.Get $thumbnail }}
+
+        {{ if not $thumbnail_file }}
+          {{ $thumbnail = "images/default-thumbnail.png" }}
+          {{ $thumbnail_file = resources.Get $thumbnail }}
+        {{ end }}
+
+        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d webp q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
+        {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d jpg q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
+        <picture class="header-image">
+          <source srcset="{{ $image_webp }}" type="image/webp">
+          <source srcset="{{ $image_jpg }}" type="image/jpeg">
+          <img src="{{ $image_jpg }}" width="{{ $thumbnail_file.Width }}" height="{{ $thumbnail_file.Height }}">
+        </picture>
+
+        <h1>{{ .Title }}</h1>
+
+        <div class="article-info">
+          {{/*  TODO: maybe some day I figure out how to put the author's img here  */}}
+          {{/*  <div class="author-image"></div>  */}}
+          <div class="release-stack">
+              {{ $author := index (.Params.Authors) 0 }}
+              <div>By <a href="/authors/{{ urlize $author }}" class="author-link">{{ $author }}</a></div>
+              <div>Posted on {{ .Params.Date.Format "Monday, 02 Jan 2006" }}</div>
+              {{ if not (eq .Params.Date .Params.LastMod) }}
+                <div>Updated on {{ .Params.LastMod.Format "Monday, 02 Jan 2006 15:04" }}</div>
+              {{ end }}
+          </div>
+          <div class="tags">
+            {{ range .Params.Tags }}
+              <a href="/tags/{{ urlize . }}" class="tag">{{ . }}</a>
+            {{ end }}
+          </div>
+        </div>
+      </header>
+    
+      <section class="content">
+        {{ .Content }}
+      </section>
+    </article>
+  </main>
+{{ end }}
+{{ define "footer" }}
+  {{ partial "footer" . }}
+{{ end }}

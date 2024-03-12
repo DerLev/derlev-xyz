@@ -49,6 +49,10 @@ export default {
           900: '#01180f',
         },
       },
+      aspectRatio: {
+        '19/6': '16 / 6',
+        '16/9': '16 / 9',
+      },
     },
     fontFamily: {
       display: ['"Space Grotesk"', 'sans-serif'],
