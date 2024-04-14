@@ -29,9 +29,18 @@
           <div class="release-stack">
               {{ $author := index (.Params.Authors) 0 }}
               <div>By <a href="/authors/{{ urlize $author }}" class="author-link">{{ $author }}</a></div>
-              <div>Posted on {{ .Params.Date.Format "Monday, 02 Jan 2006" }}</div>
-              {{ if not (eq .Params.Date .Params.LastMod) }}
-                <div>Updated on {{ .Params.LastMod.Format "Monday, 02 Jan 2006 15:04" }}</div>
+              <div>Posted on 
+                <time datetime="{{ .Params.Date.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.Date.Format "02 Jan 2006 03:04:05 GMT-07:00" }}">
+                  {{ .Params.Date.Format "Monday, 02 Jan 2006" }}
+                </time>
+              </div>
+              {{/*  Show last updated from git commit timestamp if not released on the same day  */}}
+              {{ if not (eq (.Params.Date.Format "2006-01-02") (.Params.LastMod.Format "2006-01-02")) }}
+                <div>Updated on 
+                  <time datetime="{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.LastMod.Format "02 Jan 2006 03:04:05 GMT-07:00" }}">
+                    {{ .Params.LastMod.Format "Monday, 02 Jan 2006" }}
+                  </time>
+                </div>
               {{ end }}
           </div>
           <div class="tags">

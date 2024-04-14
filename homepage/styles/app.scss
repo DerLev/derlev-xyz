@@ -242,3 +242,23 @@ main.list-page {
     @apply text-green-500;
   }
 }
+
+time[data-hover] {
+  position: relative;
+
+  &::before {
+    content: attr(data-hover);
+    position: absolute;
+    display: block;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    pointer-events: none;
+    @apply bg-text-500 text-sm px-1 py-0.5 rounded shadow opacity-0 transition-opacity;
+  }
+
+  &:hover::before {
+    @apply opacity-100;
+  }
+}
