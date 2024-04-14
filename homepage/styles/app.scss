@@ -102,7 +102,7 @@ body {
   @apply w-full max-w-5xl self-center px-4;
 }
 
-article {
+article.page {
   @apply w-full max-w-5xl self-center px-4 flex flex-col gap-10;
 
   header {
@@ -140,6 +140,88 @@ article {
 
   .content {
     @include markdownContent();
+  }
+}
+
+main.list-page {
+  header {
+    @apply flex justify-center items-center flex-col py-8 md:py-12;
+
+    h1 {
+      @apply text-4xl md:text-5xl font-bold bg-gradient-to-t from-text-300 to-text-100 bg-clip-text md:leading-tight leading-tight text-transparent;
+    }
+
+    // subheading
+    h2 {
+      @apply text-xl text-text-300;
+    }
+  }
+
+  .articles-list  {
+    @apply grid auto-cols-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center py-2 px-6;
+
+    article {
+      @apply w-full max-w-sm;
+
+      > a {
+        @apply bg-neutral-800 flex flex-col gap-4 pb-4 rounded-lg overflow-hidden shadow-lg transition hover:scale-105;
+
+        > picture {
+          @apply h-40 w-full flex justify-center items-center overflow-hidden;
+        }
+
+        > div {
+          @apply px-4 flex flex-col gap-2 min-h-28;
+
+          h3 {
+            @apply text-xl font-semibold;
+          }
+
+          p {
+            @apply text-text-300;
+
+            &.no-desc {
+              @apply italic;
+            }
+          }
+
+          .tags {
+            @apply flex gap-x-2 gap-y-1.5 flex-wrap mt-auto;
+
+            > span {
+              @apply bg-text-500/20 rounded px-0.5 text-text-300 text-sm;
+
+              &::before {
+                content: "#";
+                @apply italic mr-0.5;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pagination-container {
+    @apply my-8;
+  }
+}
+
+.pagination {
+  @apply flex justify-center items-center w-full gap-4;
+
+  .page-item {
+    a {
+      @apply bg-neutral-800 h-8 w-8 flex justify-center items-center rounded transition hover:bg-neutral-700;
+    }
+
+    &.active a {
+      @apply bg-primary-700;
+    }
+
+    &.disabled a {
+      @apply bg-neutral-900 text-text-500;
+    }
   }
 }
 
