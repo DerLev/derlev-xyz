@@ -106,18 +106,18 @@ article.page {
   @apply w-full max-w-5xl self-center px-4 flex flex-col gap-10;
 
   header {
-    @apply flex flex-col gap-4 w-full;
+    @apply flex flex-col gap-4 w-full bg-text-900 rounded shadow-xl;
 
     .header-image {
       @apply w-full max-h-72 h-full object-cover object-center self-center flex justify-center items-center overflow-hidden rounded shadow-xl;
     }
 
     > h1 {
-      @apply md:text-5xl text-4xl font-bold bg-gradient-to-t from-text-300 to-text-100 bg-clip-text text-transparent;
+      @apply md:text-5xl text-4xl font-bold bg-gradient-to-t from-text-300 to-text-100 bg-clip-text text-transparent px-3;
     }
 
     .article-info {
-      @apply flex md:justify-between md:items-center flex-col md:flex-row gap-2 bg-text-900 rounded py-1 px-3;
+      @apply flex md:justify-between md:items-center flex-col md:flex-row gap-2 py-1 px-3;
 
       .author-link {
         @apply relative text-primary-50 hover:text-primary-100 transition;
@@ -157,8 +157,30 @@ main.list-page {
     }
   }
 
+  &.tag-page header {
+    @apply flex flex-col gap-4;
+
+    h1 {
+      background-image: none;
+      @apply bg-text-500/35 rounded-lg px-1 bg-clip-border text-text-100;
+
+      &::before {
+        content: "#";
+        @apply text-text-300 mr-2 italic;
+      }
+    }
+
+    .divider {
+      @apply w-24 bg-text-500 h-0.5 rounded-full mt-2;
+    }
+
+    p {
+      @apply text-text-300 text-lg font-medium;
+    }
+  }
+
   .articles-list  {
-    @apply grid auto-cols-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center py-2 px-6;
+    @apply grid auto-cols-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center py-2 px-6;
 
     article {
       @apply w-full max-w-sm;
@@ -204,6 +226,19 @@ main.list-page {
 
   .pagination-container {
     @apply my-8;
+  }
+
+  .tags-list {
+    @apply max-w-6xl w-full mx-auto flex gap-x-2 gap-y-1.5 flex-wrap items-center;
+
+    a {
+      @apply bg-text-500/35 rounded-lg px-2 bg-clip-border text-text-100 text-xl hover:scale-110 transition-transform;
+
+      &::before {
+        content: "#";
+        @apply text-text-300 mr-1 italic;
+      }
+    }
   }
 }
 
