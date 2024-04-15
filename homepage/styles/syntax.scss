@@ -1,7 +1,7 @@
 /* Background */ .bg { @apply text-text-100 bg-background-dark; }
 /* PreWrapper */ .chroma { @apply text-text-100 bg-background-dark; }
 .highlight > .chroma {
-  @apply mb-4 px-4 py-1 border-2 border-text-500/35 text-base;
+  @apply mb-4 px-4 py-1 border-2 border-text-500/35 text-base overflow-auto;
 }
 /* Other */ .chroma .x {  }
 /* Error */ .chroma .err { @apply text-red-400 bg-red-950; }
