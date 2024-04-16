@@ -2,10 +2,10 @@
   {{ partial "topnav" }}
 {{ end }}
 {{ define "main" }}
-  <main class="list-page">
+  <main class="list-page" itemscope itemtype="https://schema.org/Blog" itemid="{{ .Permalink }}">
     <header>
-      <h1>Blog</h1>
-      {{/*  <h2>subheading</h2>  */}}
+      <h1 itemprop="name">Blog</h1>
+      <meta itemprop="description" content="{{ .Description }}">
     </header>
     <section class="articles-list">
       {{ $paginator := .Paginate (where .Pages "Type" "blog") 20 }}

@@ -2,9 +2,9 @@
   {{ partial "topnav" }}
 {{ end }}
 {{ define "main" }}
-  <main class="list-page author-page">
+  <main class="list-page author-page" itemscope itemtype="https://schema.org/Person" itemid="{{ .Permalink }}">
     <header>
-      <h1>{{ .Title }}</h1>
+      <h1 itemprop="name">{{ .Title }}</h1>
       <div class="avatar">
         {{ $avatar := "img/profile.webp" }}
         {{ $avatar_file := .Resources.Get $avatar }}
@@ -14,20 +14,25 @@
           {{ $avatar_file = resources.Get $avatar }}
         {{ end }}
 
-        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" "256x256 webp q90" "Page" .) -}}
-        {{- $image_webp_hires := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" "512x512 webp q90" "Page" .) -}}
+        {{ $image_width := 256 }}
+        {{ $image_height := 256 }}
+        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" (printf "%dx%d webp q90" $image_width $image_height) "Page" .) -}}
+        {{- $image_webp_hires := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" (printf "%dx%d webp q90" (mul $image_width 2) (mul $image_height 2)) "Page" .) -}}
 
-        <picture>
+        <picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <meta itemprop="width" content="{{ $image_width }}">
+          <meta itemprop="height" content="{{ $image_height }}">
+          <meta itemprop="encodingFormat" content="image/webp">
           <source srcset="{{ $image_webp }}, {{ $image_webp_hires }} 2x" type="image/webp">
-          <img src="{{ $image_webp }}" width="{{ $avatar_file.Width }}" height="{{ $avatar_file.Height }}">
+          <img src="{{ $image_webp }}" width="{{ $image_width }}" height="{{ $image_height }}" itemprop="url">
         </picture>
       </div>
       <div class="socials">
         {{ range $key, $value := .Params.links }}
-          {{ partial "social-link" (dict "platform" $key "link" $value) }}
+          {{ partial "social-link" (dict "platform" $key "link" $value "sameAs" true) }}
         {{ end }}
       </div>
-      <div class="description">
+      <div class="description" itemprop="description">
         {{ .Content }}
       </div>
     </header>

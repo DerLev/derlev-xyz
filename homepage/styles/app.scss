@@ -126,8 +126,8 @@ article.page {
       .tags {
         @apply flex gap-x-2 gap-y-1 items-center flex-wrap max-w-96 w-full md:justify-end justify-start;
 
-        > a {
-          @apply bg-text-500/20 rounded px-0.5 hover:scale-105 transition;
+        a {
+          @apply bg-text-500/20 rounded px-0.5 hover:scale-105 transition block;
 
           &::before {
             content: "#";
@@ -252,7 +252,7 @@ main.list-page {
     @apply max-w-6xl w-full mx-auto flex gap-x-2 gap-y-1.5 flex-wrap items-center;
 
     a {
-      @apply bg-text-500/35 rounded-lg px-2 bg-clip-border text-text-100 text-xl hover:scale-110 transition-transform;
+      @apply bg-text-500/35 rounded-lg px-2 bg-clip-border text-text-100 text-xl hover:scale-110 transition-transform block;
 
       &::before {
         content: "#";
