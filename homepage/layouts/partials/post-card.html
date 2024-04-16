@@ -1,0 +1,33 @@
+<article>
+  <a href="{{ .RelPermalink }}">
+    {{ $img := .Resources.Get "img/thumbnail.png" }}
+    {{ $img_path := cond (fileExists "img/thumbnail.png") "img/thumbnail.png" "images/default-thumbnail.png" }}
+    {{ $img := cond ($img | not | not) $img (resources.Get "images/default-thumbnail.png") }}
+
+    {{ $img_height := 452 }}
+    {{ $img_width := 768 }}
+
+    {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $img_path "ImgParam" (printf "%dx%d webp q90" $img_width $img_height) "Page" .) -}}
+    {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $img_path "ImgParam" (printf "%dx%d jpg q90" $img_width $img_height) "Page" .) -}}
+    <picture>
+      <source srcset="{{ $image_webp }}" type="image/webp">
+      <source srcset="{{ $image_jpg }}" type="image/jpeg">
+      <img src="{{ $image_jpg }}" width="{{ $img_width }}" height="{{ $img_height }}">
+    </picture>
+
+    <div>
+      <h3>{{ .Title }}</h3>
+      {{ if .Description }}
+        <p>{{ .Description }}</p>
+      {{ else }}
+        <p class="no-desc">This post has no description</p>
+      {{ end }}
+
+      <div class="tags">
+        {{ range .Params.Tags }}
+          <span>{{ . }}</span>
+        {{ end }}
+      </div>
+    </div>
+  </a>
+</article>

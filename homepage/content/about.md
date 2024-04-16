@@ -5,7 +5,6 @@ draft: false
 description: 'About derlev.xyz'
 sitemap:
   changeFreq: monthly
-og-type: website
 ---
 
 # About this website

@@ -5,7 +5,6 @@ draft: false
 description: 'Privacy guidlines of derlev.xyz'
 sitemap:
   changeFreq: monthly
-og-type: website
 ---
 
 # Privacy

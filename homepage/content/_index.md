@@ -5,5 +5,4 @@ draft: false
 description: Hi, I'm DerLev. I do random coding and homelab things and post my findings and knowledge here
 sitemap:
   changeFreq: monthly
-og-type: website
 ---

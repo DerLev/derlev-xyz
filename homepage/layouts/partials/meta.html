@@ -5,7 +5,7 @@
 {{ end }}
 
 {{/*  {{ $img_ = "/favicons/derlev-opg.webp" }}  */}}
-{{ $og_type := .Param "og-type" | default "article" }}
+{{ $og_type := .Param "og-type" | default (cond (hasPrefix .RelPermalink "/blog/") "article" "website") }}
 {{ $description := .Description | default .Summary }}
 {{ $index := .Params.index | default true }}
 
@@ -37,6 +37,9 @@
     <meta property="og:article:tag" content="{{ . }}">
     {{ end }}
     {{ end }}
+    {{ end }}
+    {{ if eq $og_type "profile" }}
+    <meta property="og:profile:username" content="{{ .Title }}">
     {{ end }}
 
     <meta name="twitter:card" content="summary" />

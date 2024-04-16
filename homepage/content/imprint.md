@@ -4,7 +4,6 @@ date: 2024-02-26T14:50:44+01:00
 draft: false
 description: 'Imprint of derlev.xyz'
 index: false
-og-type: website
 sitemap:
   changeFreq: monthly
 ---
