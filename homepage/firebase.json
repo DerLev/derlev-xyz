@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/firebase/firebase-tools/master/schema/firebase-config.json",
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "redirects": [
+      {
+        "source": "/blog/page/1/",
+        "destination": "/blog/",
+        "type": 301
+      }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": true
+  }
+}
