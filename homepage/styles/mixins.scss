@@ -1,0 +1,4 @@
+@mixin markdownContent {
+  @apply prose prose-invert prose-neutral prose-li:m-0 max-w-none;
+  @apply prose-code:before:content-none prose-code:after:content-none prose-code:bg-background-dark prose-code:px-1 prose-code:py-0.5 prose-code:rounded;
+}
