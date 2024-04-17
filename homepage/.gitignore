@@ -13,7 +13,7 @@ hugo.linux
 /.hugo_build.lock
 
 # Vite build targets
-/static/react
+/static/client
 /data/react.json
 
 # Logs

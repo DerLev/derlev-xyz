@@ -6,7 +6,7 @@ const syncToHugo = () => {
   return {
     name: 'syncToHugo',
     closeBundle: async () => {
-      const svelteBuild = './static/react'
+      const svelteBuild = './static/client'
       const assets = await readdir(svelteBuild)
       const js = assets.filter((name) =>
         name.match(/(index.)(?!.*?esm)(?!.*?css).*\w+/),
@@ -14,7 +14,7 @@ const syncToHugo = () => {
       const css = assets.filter((name) => name.includes('.css'))[0]
       await Promise.all([
         writeFile(`./data/react.json`, JSON.stringify({ js, css })),
-        rm('./static/react/index.html'),
+        rm('./static/client/index.html'),
       ])
       console.log(`wrote ${js} to hugo data`)
     },
@@ -25,7 +25,7 @@ const syncToHugo = () => {
 export default defineConfig({
   root: 'app',
   build: {
-    outDir: '../static/react',
+    outDir: '../static/client',
     emptyOutDir: true,
     assetsDir: '',
   },
