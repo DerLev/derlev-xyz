@@ -1,16 +1,22 @@
 {{ define "main" }}
-      <main>
+      <main itemscope itemtype="https://schema.org/Person" itemid="{{ site.BaseURL }}authors/derlev/">
+        <meta itemprop="description" content="{{ .Description }}">
+        <meta itemprop="url" content="{{ site.BaseURL }}authors/derlev/">
+        <meta itemprop="mainEntityOfPage" content="{{ site.BaseURL }}authors/derlev/">
         <div class="flex grow flex-col items-center justify-center gap-4 pt-4" id="home">
           {{- $image_url := "/images/derlev-profile.webp" -}}
           {{- $image_width := 256 -}}
           {{- $image_height := 256 -}}
           {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (mul $image_width 2) (mul $image_height 2))) -}}
           {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image_width $image_height)) -}}
-          <picture>
+          <picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="width" content="{{ $image_width }}">
+            <meta itemprop="height" content="{{ $image_height }}">
+            <meta itemprop="encodingFormat" content="image/webp">
             <source srcset="{{ $image_webp_small }}, {{ $image_webp }} 2x" type="image/webp">
-            <img class="derlev-profile" src="{{ $image_webp_small }}" width="{{ $image_width }}" height="{{ $image_height }}" alt="DerLev Profile">
+            <img class="derlev-profile" src="{{ $image_webp_small }}" width="{{ $image_width }}" height="{{ $image_height }}" alt="DerLev Profile" itemprop="url">
           </picture>
-          <h1 class="text-center font-semibold text-4xl">Hi, my name is <span class="derlev-gradient">DerLev</span>!</h1>
+          <h1 class="text-center font-semibold text-4xl">Hi, my name is <span class="derlev-gradient" itemprop="name">DerLev</span>!</h1>
           <div class="text-stack">
             <p class="subheading">I do web development and homelabbing</p>
             <p class="blog-cta">Look at my blog for my dev diaries and findings</p>
@@ -30,6 +36,7 @@
               href="https://github.com/DerLev"
               target="_blank"
               rel="noopener noreferrer"
+              itemprop="sameAs"
             >
               <!-- <FaGithub /> -->
               {{- "assets/icons/github.svg" | readFile | safeHTML }}
@@ -40,6 +47,7 @@
               href="https://discord.com/users/377103974081495042"
               target="_blank"
               rel="noopener noreferrer"
+              itemprop="sameAs"
             >
               <!-- <FaDiscord /> -->
               {{- "assets/icons/discord.svg" | readFile | safeHTML }}
@@ -50,6 +58,7 @@
               href="https://twitter.com/_derlev_"
               target="_blank"
               rel="noopener noreferrer"
+              itemprop="sameAs"
             >
               <!-- <FaTwitter /> -->
               {{- "assets/icons/twitter.svg" | readFile | safeHTML }}

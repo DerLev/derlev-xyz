@@ -238,4 +238,32 @@
         ]
       }
     </script>
+{{- else if eq .RelPermalink "/" -}}
+    {{- $image_url := "/images/derlev-profile.webp" -}}
+    {{- $image_width := 256 -}}
+    {{- $image_height := 256 -}}
+    {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image_width $image_height)) -}}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Person",
+        "@id": "{{ site.BaseURL }}authors/derlev/",
+        "mainEntityOfPage": "{{ site.BaseURL }}authors/derlev/",
+        "url": "{{ site.BaseURL }}authors/derlev/",
+        "name": "DerLev",
+        "description": "{{ .Description }}",
+        "image": {
+          "@type": "ImageObject",
+          "url": "{{ $image_webp }}",
+          "width": "{{ $image_width }}",
+          "height": "{{ $image_height }}",
+          "encodingFormat": "image/webp"
+        },
+        "sameAs": [
+          "https://github.com/DerLev",
+          "https://discord.com/users/377103974081495042",
+          "https://twitter.com/_derlev_"
+        ]
+      }
+    </script>
 {{- end -}}
