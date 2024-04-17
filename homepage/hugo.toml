@@ -11,6 +11,21 @@ enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = true
 
+[mediaTypes]
+  [mediaTypes."text/droplist"]
+    suffixes = ["droplist"]
+
+[outputFormats.droplist]
+  mediatype = "text/droplist"
+  isPlainText = true
+
+[outputs]
+  page = ["HTML", "droplist"]
+
+[permalinks]
+  [permalinks.page]
+    blog = "/blog/:year/:slugorfilename"
+
 [sitemap]
   changeFreq = 'weekly'
   priority = 1

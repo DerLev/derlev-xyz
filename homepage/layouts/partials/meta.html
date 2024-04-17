@@ -1,6 +1,6 @@
 {{ $img_file := "img/thumbnail.png" }}
 
-{{ if not (fileExists (print .RelPermalink "img/thumbnail.png")) }}
+{{ if not (.Page.Resources.Get "img/thumbnail.png") }}
   {{ $img_file = "images/default-thumbnail.png" }}
 {{ end }}
 

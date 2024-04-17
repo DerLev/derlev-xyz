@@ -10,6 +10,11 @@
   {{ $image_url = resources.Get .ImageSrc }}
 {{ end }}
 
+{{- if not (.Page.Scratch.Get "droplist") -}}
+  {{- .Page.Scratch.Set "droplist" (slice) -}}
+{{- end -}}
+{{- .Page.Scratch.Add "droplist" $image_url.RelPermalink -}}
+
 {{ if $image_url }} 
   {{/* Resize and convert the image  */}}
   {{ $image_url = $image_url.Resize $img_param }}
