@@ -1,0 +1,241 @@
+{{- if and (eq .Page.Type "blog") (not (eq .RelPermalink "/blog/")) -}}
+    {{- $author := index (.Params.Authors) 0 -}}
+    {{- $thumbnail := "img/thumbnail.png" -}}
+    {{- $thumbnail_file := .Resources.Get $thumbnail -}}
+
+    {{- if not $thumbnail_file }}
+      {{- $thumbnail = "images/default-thumbnail.png" -}}
+      {{- $thumbnail_file = resources.Get $thumbnail -}}
+    {{- end -}}
+    {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d jpg q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "BlogPosting",
+        "@id": "{{ .Permalink }}",
+        "headline": "{{ .Title }}",
+        "name": "{{ .Title }}",
+        "description": "{{ .Description }}",
+        "datePublished": "{{ .Date.Format "2006-01-02T15:04:05.000Z" }}",
+        "dateCreated": "{{ .Date.Format "2006-01-02T15:04:05.000Z" }}",
+        {{- if not (eq (.Params.Date.Format "2006-01-02") (.Params.LastMod.Format "2006-01-02")) }}
+        "dateModified": "{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}",
+        {{- end }}
+        {{- if .Params.ExpiryDate }}
+        "expires": "{{ .Params.ExpiryDate.Format "2006-01-02T15:04:05.000Z" }}",
+        {{- end }}
+        "author": {
+          "@type": "Person",
+          "@id": "{{ site.BaseURL }}authors/{{ urlize $author }}/",
+          "name": "{{ $author }}",
+          "url": "{{ site.BaseURL }}authors/{{ urlize $author }}/"
+        },
+        "copyrightHolder": {
+          "@type": "Person",
+          "@id": "{{ site.BaseURL }}authors/{{ urlize $author }}/",
+          "name": "{{ $author }}",
+          "url": "{{ site.BaseURL }}authors/{{ urlize $author }}/"
+        },
+        "image": {
+          "@type": "ImageObject",
+          "width": "{{ $thumbnail_file.Width }}",
+          "height": "{{ $thumbnail_file.Height }}",
+          "encodingFormat": "image/jpeg",
+          "url": "{{ $image_jpg }}"
+        },
+        "url": "{{ .Permalink }}",
+        "isPartOf": {
+          "@type": "Blog",
+          "@id": "{{ site.BaseURL }}blog/",
+          "name": "Blog"
+        },
+        "wordCount": "{{ .WordCount }}",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "keywords": [
+          {{- $keywordsLength := (.Params.Tags | len) -}}
+          {{ range $index, $tag := .Params.Tags }}
+          {
+            "@type": "DefinedTerm",
+            "@id": "{{ site.BaseURL }}tags/{{ $tag }}/",
+            "inDefinedTermSet": "{{ site.BaseURL }}tags/",
+            "name": "{{ $tag }}",
+            "url": "{{ site.BaseURL }}tags/{{ $tag }}/",
+            "mainEntityOfPage": "{{ site.BaseURL }}tags/{{ $tag }}/"
+          }{{- if not (eq $index (sub $keywordsLength 1)) -}},{{- end -}}
+          {{ end }}
+        ]
+      }
+    </script>
+{{- else if eq .RelPermalink "/blog/" -}}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Blog",
+        "@id": "{{ .Permalink }}",
+        "name": "{{ .Title }}",
+        "description": "{{ .Description }}",
+        "copyrightHolder": {
+          "@type": "Person",
+          "@id": "{{ site.BaseURL }}authors/derlev/",
+          "name": "DerLev",
+          "url": "{{ site.BaseURL }}authors/derlev/"
+        },
+        "dateModified": "{{ time.Now.Format "2006-01-02T15:04:05.000Z" }}",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "blogPost": [
+          {{- $blogPages := where site.Pages "Type" "blog" -}}
+          {{- $pages := where $blogPages "Kind" "ne" "section" -}}
+          {{- $pagesLength := ($pages | len) -}}
+          {{ range $index, $page := $pages }}
+          {{- $author := index (.Params.Authors) 0 -}}
+          {{- $thumbnail := "img/thumbnail.png" -}}
+          {{- $thumbnail_file := .Resources.Get $thumbnail -}}
+
+          {{- if not $thumbnail_file }}
+            {{- $thumbnail = "images/default-thumbnail.png" -}}
+            {{- $thumbnail_file = resources.Get $thumbnail -}}
+          {{- end -}}
+          {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d jpg q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
+          {
+            "@context": "https://schema.org/",
+            "@type": "BlogPosting",
+            "@id": "{{ .Permalink }}",
+            "headline": "{{ .Title }}",
+            "name": "{{ .Title }}",
+            "description": "{{ .Description }}",
+            "datePublished": "{{ .Date.Format "2006-01-02T15:04:05.000Z" }}",
+            "dateCreated": "{{ .Date.Format "2006-01-02T15:04:05.000Z" }}",
+            {{- if not (eq (.Params.Date.Format "2006-01-02") (.Params.LastMod.Format "2006-01-02")) }}
+            "dateModified": "{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}",
+            {{- end }}
+            {{- if .Params.ExpiryDate }}
+            "expires": "{{ .Params.ExpiryDate.Format "2006-01-02T15:04:05.000Z" }}",
+            {{- end }}
+            "author": {
+              "@type": "Person",
+              "@id": "{{ site.BaseURL }}authors/{{ urlize $author }}/",
+              "name": "{{ $author }}",
+              "url": "{{ site.BaseURL }}authors/{{ urlize $author }}/"
+            },
+            "copyrightHolder": {
+              "@type": "Person",
+              "@id": "{{ site.BaseURL }}authors/{{ urlize $author }}/",
+              "name": "{{ $author }}",
+              "url": "{{ site.BaseURL }}authors/{{ urlize $author }}/"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "width": "{{ $thumbnail_file.Width }}",
+              "height": "{{ $thumbnail_file.Height }}",
+              "encodingFormat": "image/jpeg",
+              "url": "{{ $image_jpg }}"
+            },
+            "url": "{{ .Permalink }}",
+            "mainEntityOfPage": "{{ .Permalink }}",
+            "isPartOf": {
+              "@type": "Blog",
+              "@id": "{{ site.BaseURL }}blog/",
+              "name": "Blog"
+            },
+            "wordCount": "{{ .WordCount }}",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "keywords": [
+              {{- $keywordsLength := (.Params.Tags | len) -}}
+              {{ range $index, $tag := .Params.Tags }}
+              {
+                "@type": "DefinedTerm",
+                "@id": "{{ site.BaseURL }}tags/{{ $tag }}/",
+                "inDefinedTermSet": "{{ site.BaseURL }}tags/",
+                "name": "{{ $tag }}",
+                "url": "{{ site.BaseURL }}tags/{{ $tag }}/",
+                "mainEntityOfPage": "{{ site.BaseURL }}tags/{{ $tag }}/"
+              }{{- if not (eq $index (sub $keywordsLength 1)) -}},{{- end -}}
+              {{ end }}
+            ]
+          }{{- if not (eq $index (sub $pagesLength 1)) -}},{{- end -}}
+          {{ end }}
+        ]
+      }
+    </script>
+{{- else if and (eq .Page.Type "authors") (not (eq .RelPermalink "/authors/")) -}}
+    {{ $avatar := "img/profile.webp" }}
+    {{ $avatar_file := .Resources.Get $avatar }}
+
+    {{ if not $avatar_file }}
+      {{ $avatar = "images/default-profile.webp" }}
+      {{ $avatar_file = resources.Get $avatar }}
+    {{ end }}
+
+    {{ $image_width := 512 }}
+    {{ $image_height := 512 }}
+    {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" (printf "%dx%d webp q90" $image_width $image_height) "Page" .) -}}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Person",
+        "@id": "{{ .Permalink }}",
+        "name": "{{ .Title }}",
+        "description": "{{ .Plain }}",
+        "image": {
+          "@type": "ImageObject",
+          "url": "{{ $image_webp }}",
+          "width": "{{ $image_width }}",
+          "height": "{{ $image_height }}",
+          "encodingFormat": "image/webp"
+        },
+        "sameAs": [
+          {{ range $key, $value := .Params.links }}
+          {{ printf "%s%s" (index site.Data.socials $key).href (string $value) }},
+          {{ end }}
+        ]
+      }
+    </script>
+    {{ range where .Site.Pages ".Params.authors" "intersect" (slice .Title) }}
+    {{ partial "json-ld-post-ref" . }}
+    {{ end }}
+{{- else if and (eq .Page.Type "tags") (not (eq .RelPermalink "/tags/")) -}}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "DefinedTerm",
+        "@id": "{{ .Permalink }}",
+        "name": "{{ .Title }}",
+        "url": "{{ .Permalink }}",
+        {{- if .Description }}
+        "description": "{{ .Description }}",
+        {{- end }}
+        "inDefinedTermSet": "{{ site.BaseURL }}tags/"
+      }
+    </script>
+    {{ range .Pages }}
+    {{ partial "json-ld-post-ref" . }}
+    {{ end }}
+{{- else if eq .RelPermalink "/tags/" -}}
+    {{ $tagsLength := (.Pages | len) }}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "DefinedTermSet",
+        "@id": "{{ .Permalink }}",
+        "name": "{{ .Title }}",
+        "url": "{{ .Permalink }}",
+        "hasDefinedTerm": [
+          {{ range $index, $tag := .Pages }}
+          {
+            "@type": "DefinedTerm",
+            "@id": "{{ .Permalink }}",
+            "url": "{{ .Permalink }}",
+            "name": "{{ .Title }}",
+            {{- if .Description }}
+            "description": "{{ .Description }}",
+            {{- end }}
+            "mainEntityOfPage": "{{ .Permalink }}"
+          }{{- if not (eq $index (sub $tagsLength 1)) -}},{{- end -}}
+          {{ end }}
+        ]
+      }
+    </script>
+{{- end -}}

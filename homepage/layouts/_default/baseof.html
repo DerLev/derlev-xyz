@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/react/{{ .Site.Data.react.css }}" />
     <script type="module" defer src="/react/{{ .Site.Data.react.js }}"></script>
     {{ partial "meta" . }}
+    {{ partial "json-ld" . }}
   </head>
   <body>
     <div class="content-wrapper">
