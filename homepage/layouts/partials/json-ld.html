@@ -7,7 +7,7 @@
       {{- $thumbnail = "images/default-thumbnail.png" -}}
       {{- $thumbnail_file = resources.Get $thumbnail -}}
     {{- end -}}
-    {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d jpg q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
+    {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d webp q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" . "ImgAbsoluteUrl" true) -}}
     <script type="application/ld+json">
       {
         "@context": "https://schema.org/",
@@ -40,8 +40,8 @@
           "@type": "ImageObject",
           "width": "{{ $thumbnail_file.Width }}",
           "height": "{{ $thumbnail_file.Height }}",
-          "encodingFormat": "image/jpeg",
-          "url": "{{ $image_jpg }}"
+          "encodingFormat": "image/webp",
+          "url": "{{ $image_webp }}"
         },
         "url": "{{ .Permalink }}",
         "isPartOf": {
@@ -97,7 +97,7 @@
             {{- $thumbnail = "images/default-thumbnail.png" -}}
             {{- $thumbnail_file = resources.Get $thumbnail -}}
           {{- end -}}
-          {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d jpg q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
+          {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d webp q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" . "ImgAbsoluteUrl" true) -}}
           {
             "@context": "https://schema.org/",
             "@type": "BlogPosting",
@@ -129,8 +129,8 @@
               "@type": "ImageObject",
               "width": "{{ $thumbnail_file.Width }}",
               "height": "{{ $thumbnail_file.Height }}",
-              "encodingFormat": "image/jpeg",
-              "url": "{{ $image_jpg }}"
+              "encodingFormat": "image/webp",
+              "url": "{{ $image_webp }}"
             },
             "url": "{{ .Permalink }}",
             "mainEntityOfPage": "{{ .Permalink }}",
@@ -171,7 +171,7 @@
 
     {{ $image_width := 512 }}
     {{ $image_height := 512 }}
-    {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" (printf "%dx%d webp q90" $image_width $image_height) "Page" .) -}}
+    {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" (printf "%dx%d webp q90" $image_width $image_height) "Page" . "ImgAbsoluteUrl" true) -}}
     <script type="application/ld+json">
       {
         "@context": "https://schema.org/",

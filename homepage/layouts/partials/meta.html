@@ -1,23 +1,24 @@
-{{ $img := print .Permalink "img/thumbnail.png" }}
+{{ $img_file := "img/thumbnail.png" }}
 
 {{ if not (fileExists (print .RelPermalink "img/thumbnail.png")) }}
-    {{ $img = "/favicons/derlev-opg.webp" }}
+  {{ $img_file = "images/default-thumbnail.png" }}
 {{ end }}
 
-{{/*  {{ $img_ = "/favicons/derlev-opg.webp" }}  */}}
+{{ $img := partial "ImageConverter.html" (dict "ImageSrc" $img_file "ImgParam" (printf "%dx%d webp q90" 1920 1080) "Page" . "ImgAbsoluteUrl" true) }}
+
 {{ $og_type := .Param "og-type" | default (cond (hasPrefix .RelPermalink "/blog/") "article" "website") }}
 {{ $description := .Description | default .Summary }}
 {{ $index := .Params.index | default true }}
 
 
-    <link rel="canonical" href="{{ .Permalink | absURL }}" />
+    <link rel="canonical" href="{{ .Permalink }}" />
 
     <meta name="description" content="{{ $description }}">
-    <meta name="image" content="{{ $img | absURL }}">
+    <meta name="image" content="{{ $img }}">
 
     <meta property="og:title" content="{{ .Title }}" />
-    <meta property="og:url" content="{{ .Permalink | absURL }}" />
-    <meta property="og:image" content="{{ $img | absURL }}" />
+    <meta property="og:url" content="{{ .Permalink }}" />
+    <meta property="og:image" content="{{ $img }}" />
     <meta property="og:description" content="{{ $description }}" />
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="{{ .Site.Title }}">
@@ -46,7 +47,7 @@
     <meta name="twitter:site" content="@_derlev_">
     <meta name="twitter:title" content="{{ .Title }}">
     <meta name="twitter:description" content="{{ $description }}">
-    <meta name="twitter:image" content="{{ $img | absURL }}">
+    <meta name="twitter:image" content="{{ $img }}">
 
     {{ if eq $index false }}
     <meta name="robots" content="noindex, nofollow">

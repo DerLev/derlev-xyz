@@ -2,14 +2,13 @@
       <main>
         <div class="flex grow flex-col items-center justify-center gap-4 pt-4" id="home">
           {{- $image_url := "/images/derlev-profile.webp" -}}
-          {{- $image := resources.Get $image_url -}}
-          {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image.Width $image.Height)) -}}
-          {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (math.Div $image.Width 2) (math.Div $image.Height 2))) -}}
-          {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d jpg q90" $image.Width $image.Height)) -}}
+          {{- $image_width := 256 -}}
+          {{- $image_height := 256 -}}
+          {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (mul $image_width 2) (mul $image_height 2))) -}}
+          {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image_width $image_height)) -}}
           <picture>
             <source srcset="{{ $image_webp_small }}, {{ $image_webp }} 2x" type="image/webp">
-            <source srcset="{{ $image_jpg }}" type="image/jpeg">
-            <img class="derlev-profile" src="{{ $image_jpg }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="DerLev Profile">
+            <img class="derlev-profile" src="{{ $image_webp_small }}" width="{{ $image_width }}" height="{{ $image_height }}" alt="DerLev Profile">
           </picture>
           <h1 class="text-center font-semibold text-4xl">Hi, my name is <span class="derlev-gradient">DerLev</span>!</h1>
           <div class="text-stack">

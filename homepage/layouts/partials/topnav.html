@@ -1,15 +1,14 @@
     <nav>
       <div>
         {{- $image_url := "/images/nav-256.png" -}}
-        {{- $image := resources.Get $image_url -}}
-        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image.Width $image.Height)) -}}
-        {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (math.Div $image.Width 2) (math.Div $image.Height 2))) -}}
-        {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d jpg q90" $image.Width $image.Height)) -}}
+        {{- $image_width := 96 -}}
+        {{- $image_height := 96 -}}
+        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (mul $image_width 2) (mul $image_height 2))) -}}
+        {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image_width $image_height)) -}}
         <a href="/" class="nav-main">
           <picture>
             <source srcset="{{ $image_webp_small }}, {{ $image_webp }} 2x" type="image/webp">
-            <source srcset="{{ $image_jpg }}" type="image/jpeg">
-            <img class="nav-main-img" src="{{ $image_jpg }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="DerLev Profile">
+            <img class="nav-main-img" src="{{ $image_webp_small }}" width="{{ $image_width }}" height="{{ $image_height }}" alt="DerLev Profile">
           </picture>
           <span>DerLev</span>
         </a>

@@ -18,14 +18,12 @@
         {{ end }}
 
         {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d webp q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
-        {{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d jpg q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
         <picture class="header-image" itemprop="thumbnail" itemscope itemtype="https://schema.org/ImageObject">
           <meta itemprop="width" content="{{ $thumbnail_file.Width }}">
           <meta itemprop="height" content="{{ $thumbnail_file.Height }}">
-          <meta itemprop="encodingFormat" content="image/jpeg">
+          <meta itemprop="encodingFormat" content="image/webp">
           <source srcset="{{ $image_webp }}" type="image/webp">
-          <source srcset="{{ $image_jpg }}" type="image/jpeg">
-          <img src="{{ $image_jpg }}" width="{{ $thumbnail_file.Width }}" height="{{ $thumbnail_file.Height }}" itemprop="contentUrl">
+          <img src="{{ $image_webp }}" width="{{ $thumbnail_file.Width }}" height="{{ $thumbnail_file.Height }}" itemprop="contentUrl">
         </picture>
 
         <h1 itemprop="name">{{ .Title }}</h1>
