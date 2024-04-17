@@ -6,7 +6,14 @@
 
 {{ $img := partial "ImageConverter.html" (dict "ImageSrc" $img_file "ImgParam" (printf "%dx%d webp q90" 1920 1080) "Page" . "ImgAbsoluteUrl" true) }}
 
-{{ $og_type := .Param "og-type" | default (cond (hasPrefix .RelPermalink "/blog/") "article" "website") }}
+{{ $og_default := "website" }}
+{{ if and (eq .Page.Type "blog") (not (eq .RelPermalink "/blog/")) }}
+  {{ $og_default = "article" }}
+{{ else if and (eq .Page.Type "authors") (not (eq .RelPermalink "/authors/")) }}
+  {{ $og_default = "profile" }}
+{{ end }}
+
+{{ $og_type := .Param "og-type" | default $og_default }}
 {{ $description := .Description | default .Summary }}
 {{ $index := .Params.index | default true }}
 

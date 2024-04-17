@@ -125,7 +125,7 @@ jobs:
           add-notice-with-url: false
   
   home-build-deploy:
-    name: 'Homepage: Build Container & Deploy on Cloud Run'
+    name: 'Homepage: Build & Deploy Site on Firebase Hosting'
     runs-on: ubuntu-latest
     needs: [home-lint-typecheck]
     permissions:
