@@ -37,3 +37,9 @@ enableGitInfo = true
     noHl = false
     style = 'monokai'
     tabWidth = 2
+
+[minify]
+  minifyOutput = true
+
+  [minify.tdewolff.html]
+    keepQuotes = true
