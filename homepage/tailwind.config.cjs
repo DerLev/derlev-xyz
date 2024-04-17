@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [],
+const colors = require('tailwindcss/colors')
+
+export default {
+  content: [
+    './layouts/**/*.html',
+    './content/**/*.{html,md}',
+    './app/**/*.tsx',
+  ],
   theme: {
     extend: {
       colors: {
@@ -10,7 +16,10 @@ module.exports = {
           500: '#7d7d7d',
           900: '#050505',
         },
-        background: '#050505',
+        background: {
+          dark: '#050505',
+          light: '#fafafa',
+        },
         primary: {
           50: '#f1e6ff',
           100: '#d4b3ff',
@@ -50,5 +59,7 @@ module.exports = {
       body: ['"Space Grotesk"', 'sans-serif'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
