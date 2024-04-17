@@ -1,0 +1,48 @@
+{{ define "header" }}
+  {{ partial "topnav" }}
+{{ end }}
+{{ define "main" }}
+  <main class="list-page author-page" itemscope itemtype="https://schema.org/Person" itemid="{{ .Permalink }}">
+    <header>
+      <h1 itemprop="name">{{ .Title }}</h1>
+      <div class="avatar">
+        {{ $avatar := "img/profile.webp" }}
+        {{ $avatar_file := .Resources.Get $avatar }}
+
+        {{ if not $avatar_file }}
+          {{ $avatar = "images/default-profile.webp" }}
+          {{ $avatar_file = resources.Get $avatar }}
+        {{ end }}
+
+        {{ $image_width := 256 }}
+        {{ $image_height := 256 }}
+        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" (printf "%dx%d webp q90" $image_width $image_height) "Page" .) -}}
+        {{- $image_webp_hires := partial "ImageConverter.html" (dict "ImageSrc" $avatar "ImgParam" (printf "%dx%d webp q90" (mul $image_width 2) (mul $image_height 2)) "Page" .) -}}
+
+        <picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <meta itemprop="width" content="{{ $image_width }}">
+          <meta itemprop="height" content="{{ $image_height }}">
+          <meta itemprop="encodingFormat" content="image/webp">
+          <source srcset="{{ $image_webp }}, {{ $image_webp_hires }} 2x" type="image/webp">
+          <img src="{{ $image_webp }}" width="{{ $image_width }}" height="{{ $image_height }}" itemprop="url">
+        </picture>
+      </div>
+      <div class="socials">
+        {{ range $key, $value := .Params.links }}
+          {{ partial "social-link" (dict "platform" $key "link" $value "sameAs" true) }}
+        {{ end }}
+      </div>
+      <div class="description" itemprop="description">
+        {{ .Content }}
+      </div>
+    </header>
+    <section class="articles-list">
+      {{ range where .Site.Pages ".Params.authors" "intersect" (slice .Title) }}
+        {{ partial "post-card" . }}
+      {{ end }}
+    </section>
+  </main>
+{{ end }}
+{{ define "footer" }}
+  {{ partial "footer" . }}
+{{ end }}

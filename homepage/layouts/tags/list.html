@@ -1,0 +1,39 @@
+{{ define "header" }}
+  {{ partial "topnav" }}
+{{ end }}
+{{ define "main" }}
+{{ $is_tag_page := not (eq .RelPermalink "/tags/") }}
+  <main class="list-page {{ if not (eq .RelPermalink "/tags/")}}tag-page{{ end }}" itemscope itemtype="https://schema.org/DefinedTerm{{ cond $is_tag_page "" "Set" }}" itemid="{{ .Permalink }}">
+    {{ if $is_tag_page }}
+    <meta itemprop="inDefinedTermSet" content="{{ site.BaseURL }}tags/">
+    {{ end }}
+    <meta itemprop="url" content="{{ .Permalink }}">
+    <header>
+      <h1 itemprop="name">{{ .Title }}</h1>
+      {{ if .Description }}
+        <div class="divider"></div>
+        <p itemprop="description">{{ .Description }}</p>
+      {{ end }}
+    </header>
+    {{ if not $is_tag_page }}
+      <section class="tags-list" itemprop="hasDefinedTerm">
+        {{ range .Pages }}
+          <span itemscope itemtype="https://schema.org/DefinedTerm" itemid="{{ .Permalink }}">
+            <span itemprop="name">
+              <a href="{{ .RelPermalink }}" itemprop="url">{{.Title}}</a>
+            </span>
+          </span>
+        {{ end }}
+      </section>
+    {{ else }}
+      <section class="articles-list">
+        {{ range .Pages }}
+          {{ partial "post-card" . }}
+        {{ end }}
+      </section>
+    {{ end }}
+  </main>
+{{ end }}
+{{ define "footer" }}
+  {{ partial "footer" . }}
+{{ end }}

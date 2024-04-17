@@ -1,0 +1,85 @@
+{{ define "header" }}
+  {{ partial "topnav" }}
+{{ end }}
+{{ define "main" }}
+  <main>
+    <article class="page" itemscope itemtype="https://schema.org/BlogPosting" itemid="{{ .Permalink }}">
+      <meta itemprop="wordCount" content="{{ .WordCount }}">
+      <meta itemprop="inLanguage" content="en">
+      <meta itemprop="isAccessibleForFree" content="true">
+      <meta itemprop="description" content="{{ .Description }}">
+      <header>
+        {{ $thumbnail := "img/thumbnail.png" }}
+        {{ $thumbnail_file := .Resources.Get $thumbnail }}
+
+        {{ if not $thumbnail_file }}
+          {{ $thumbnail = "images/default-thumbnail.png" }}
+          {{ $thumbnail_file = resources.Get $thumbnail }}
+        {{ end }}
+
+        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $thumbnail "ImgParam" (printf "%dx%d webp q90" $thumbnail_file.Width $thumbnail_file.Height) "Page" .) -}}
+        <picture class="header-image" itemprop="thumbnail" itemscope itemtype="https://schema.org/ImageObject">
+          <meta itemprop="width" content="{{ $thumbnail_file.Width }}">
+          <meta itemprop="height" content="{{ $thumbnail_file.Height }}">
+          <meta itemprop="encodingFormat" content="image/webp">
+          <source srcset="{{ $image_webp }}" type="image/webp">
+          <img src="{{ $image_webp }}" width="{{ $thumbnail_file.Width }}" height="{{ $thumbnail_file.Height }}" itemprop="contentUrl">
+        </picture>
+
+        <h1 itemprop="name">{{ .Title }}</h1>
+
+        <div class="article-info">
+          {{/*  TODO: maybe some day I figure out how to put the author's img here  */}}
+          {{/*  <div class="author-image"></div>  */}}
+          <div class="release-stack">
+              {{ $author := index (.Params.Authors) 0 }}
+              <div>By 
+                <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                  <span itemprop="name">
+                    <a href="/authors/{{ urlize $author }}" class="author-link" itemprop="url">
+                      {{ $author }}
+                    
+                  </span></a>
+                </span>
+              </div>
+              <meta itemprop="dateCreated" content="{{ .Params.Date.Format "2006-01-02T15:04:05.000Z" }}">
+              <div>Posted on 
+                <time datetime="{{ .Params.Date.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.Date.Format "02 Jan 2006 03:04:05 GMT-07:00" }}">
+                  {{ .Params.Date.Format "Monday, 02 Jan 2006" }}
+                </time>
+              </div>
+              {{/*  Show last updated from git commit timestamp if not released on the same day  */}}
+              {{ if not (eq (.Params.Date.Format "2006-01-02") (.Params.LastMod.Format "2006-01-02")) }}
+                <meta itemprop="dateModified" content="{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}">
+                <div>Updated on 
+                  <time datetime="{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.LastMod.Format "02 Jan 2006 03:04:05 GMT-07:00" }}">
+                    {{ .Params.LastMod.Format "Monday, 02 Jan 2006" }}
+                  </time>
+                </div>
+              {{ end }}
+              {{ if .Params.ExpiryDate }}
+                <meta itemprop="expires" content="{{ .Params.ExpiryDate.Format "2006-01-02T15:04:05.000Z" }}">
+              {{ end }}
+          </div>
+          <div class="tags" itemprop="keywords">
+            {{ range .Params.Tags }}
+              <span itemscope itemtype="https://schema.org/DefinedTerm">
+                <meta itemprop="inDefinedTermSet" content="{{ site.BaseURL }}tags/">
+                <span itemprop="name">
+                  <a href="/tags/{{ urlize . }}" class="tag" itemprop="url">{{ . }}</a>
+                </span>
+              </span>
+            {{ end }}
+          </div>
+        </div>
+      </header>
+    
+      <section class="content" itemprop="articleBody">
+        {{ .Content }}
+      </section>
+    </article>
+  </main>
+{{ end }}
+{{ define "footer" }}
+  {{ partial "footer" . }}
+{{ end }}

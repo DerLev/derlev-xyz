@@ -1,0 +1,59 @@
+article.page {
+  @apply w-full max-w-5xl self-center px-1 flex flex-col gap-10;
+
+  header {
+    @apply flex flex-col gap-4 w-full bg-text-900 rounded-lg shadow-xl;
+
+    .header-image {
+      @apply w-full max-h-72 h-full object-cover object-center self-center flex justify-center items-center overflow-hidden rounded-lg shadow-xl;
+    }
+
+    > h1 {
+      @apply md:text-5xl text-4xl font-bold bg-gradient-to-t from-text-300 to-text-100 bg-clip-text text-transparent px-3;
+    }
+
+    .article-info {
+      @apply flex md:justify-between md:items-center flex-col md:flex-row gap-2 py-1 px-3;
+
+      .author-link {
+        @apply relative text-primary-50 hover:text-primary-100 transition;
+      }
+
+      .tags {
+        @apply flex gap-x-2 gap-y-1 items-center flex-wrap max-w-96 w-full md:justify-end justify-start;
+
+        a {
+          @apply bg-text-500/20 rounded px-0.5 hover:scale-105 transition block;
+
+          &::before {
+            content: "#";
+            @apply text-text-300 mr-0.5 italic;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    @apply px-3;
+    @include markdownContent();
+  }
+}
+
+.file-name {
+  @apply border-2 border-b-0 border-text-500/35 bg-background-dark inline-flex items-center py-2 px-4 gap-2 text-text-300 text-sm z-40;
+  position: relative;
+  bottom: -2px;
+
+  .file-icon {
+    @apply text-lg;
+  }
+}
+
+.copy-code-button {
+  @apply absolute top-0 right-0 m-2 text-text-500;
+
+  &.copied {
+    @apply text-green-500;
+  }
+}

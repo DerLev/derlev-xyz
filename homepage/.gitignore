@@ -12,6 +12,10 @@
 /.next/
 /out/
 
+# Vite build targets
+/static/client
+/data/react.json
+
 # production
 /build
 
@@ -33,3 +37,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+.firebase/

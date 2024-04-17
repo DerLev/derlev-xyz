@@ -1,0 +1,76 @@
+{{ define "main" }}
+      <main itemscope itemtype="https://schema.org/Person" itemid="{{ site.BaseURL }}authors/derlev/">
+        <meta itemprop="description" content="{{ .Description }}">
+        <meta itemprop="url" content="{{ site.BaseURL }}authors/derlev/">
+        <meta itemprop="mainEntityOfPage" content="{{ site.BaseURL }}authors/derlev/">
+        <div class="flex grow flex-col items-center justify-center gap-4 pt-4" id="home">
+          {{- $image_url := "/images/derlev-profile.webp" -}}
+          {{- $image_width := 256 -}}
+          {{- $image_height := 256 -}}
+          {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (mul $image_width 2) (mul $image_height 2))) -}}
+          {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image_width $image_height)) -}}
+          <picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="width" content="{{ $image_width }}">
+            <meta itemprop="height" content="{{ $image_height }}">
+            <meta itemprop="encodingFormat" content="image/webp">
+            <source srcset="{{ $image_webp_small }}, {{ $image_webp }} 2x" type="image/webp">
+            <img class="derlev-profile" src="{{ $image_webp_small }}" width="{{ $image_width }}" height="{{ $image_height }}" alt="DerLev Profile" itemprop="url">
+          </picture>
+          <h1 class="text-center font-semibold text-4xl">Hi, my name is <span class="derlev-gradient" itemprop="name">DerLev</span>!</h1>
+          <div class="text-stack">
+            <p class="subheading">I do web development and homelabbing</p>
+            <p class="blog-cta">Look at my blog for my dev diaries and findings</p>
+          </div>
+          <a href="/blog" class="blog-button">
+            {{- "assets/icons/Bars3-BL.svg" | readFile | safeHTML -}}
+            <span>Blog</span>
+          </a>
+          <div class="flex py-2 items-center w-full max-w-xs">
+            <div class="grow border-t border-text-500 rounded-full"></div>
+            <div class="mx-4 text-text-500">Other links</div>
+            <div class="grow border-t border-text-500"></div>
+          </div>
+          <div class="socials-stack">
+            <a
+              class="socials-button"
+              href="https://github.com/DerLev"
+              target="_blank"
+              rel="noopener noreferrer"
+              itemprop="sameAs"
+            >
+              <!-- <FaGithub /> -->
+              {{- "assets/icons/github.svg" | readFile | safeHTML }}
+              <span>GitHub</span>
+            </a>
+            <a
+            class="socials-button"
+              href="https://discord.com/users/377103974081495042"
+              target="_blank"
+              rel="noopener noreferrer"
+              itemprop="sameAs"
+            >
+              <!-- <FaDiscord /> -->
+              {{- "assets/icons/discord.svg" | readFile | safeHTML }}
+              <span>Discord</span>
+            </a>
+            <a
+              class="socials-button"
+              href="https://twitter.com/_derlev_"
+              target="_blank"
+              rel="noopener noreferrer"
+              itemprop="sameAs"
+            >
+              <!-- <FaTwitter /> -->
+              {{- "assets/icons/twitter.svg" | readFile | safeHTML }}
+              <span>Twitter</span>
+            </a>
+          </div>
+        </div>
+      </main>
+{{- end -}}
+
+{{ define "footer" }} 
+      <footer class="flex items-center justify-center py-2 px-4 text-xs text-text-500">
+        <p>&copy; {{ now.Year }} {{ .Site.Copyright }}</p>
+      </footer>
+{{- end -}}

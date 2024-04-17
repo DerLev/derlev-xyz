@@ -1,0 +1,41 @@
+.derlev-profile {
+  @apply rounded-full shadow-lg;
+  aspect-ratio: 1/1;
+  height: 8rem;
+  width: 8rem;
+}
+
+.derlev-gradient {
+  --tw-gradient-from-position: 25%;
+  --tw-gradient-to-position: 70%;
+  @apply bg-gradient-to-tr from-primary-400 to-accent-500 bg-clip-text text-transparent;
+}
+
+.text-stack {
+  @apply flex flex-col items-center text-center px-2 md:text-lg;
+
+  .subheading {
+    @apply text-text-300;
+  }
+
+  .blog-cta {
+    @apply text-text-500;
+  }
+}
+
+@mixin landingpage-button {
+  @apply flex w-full max-w-xs items-center justify-center gap-2 rounded-md border-2 border-primary-400 py-0.5 px-2 transition hover:border-primary-500 active:translate-y-0.5 active:transform;
+}
+
+.blog-button {
+  @include landingpage-button();
+}
+
+.socials-stack {
+  @apply flex w-full flex-col items-center gap-2 px-4;
+
+  .socials-button {
+    @include landingpage-button();
+    @apply border-secondary-400 hover:border-secondary-500 text-text-300;
+  }
+}

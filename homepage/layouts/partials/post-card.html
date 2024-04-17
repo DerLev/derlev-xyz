@@ -1,0 +1,38 @@
+<article {{ if eq page.RelPermalink "/blog/" }}itemprop="blogPost"{{ end }} itemscope itemtype="https://schema.org/BlogPosting" itemid="{{ .Permalink }}">
+  <a href="{{ .RelPermalink }}" itemprop="mainEntityOfPage">
+    {{ $img := .Resources.Get "img/thumbnail.png" }}
+    {{ $img_path := cond (fileExists "img/thumbnail.png") "img/thumbnail.png" "images/default-thumbnail.png" }}
+    {{ $img := cond ($img | not | not) $img (resources.Get "images/default-thumbnail.png") }}
+
+    {{ $img_width := 768 }}
+    {{ $img_height := 452 }}
+
+    {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $img_path "ImgParam" (printf "%dx%d webp q90" $img_width $img_height) "Page" .) -}}
+    <picture itemprop="thumbnail" itemscope itemtype="https://schema.org/ImageObject">
+      <meta itemprop="width" content="{{ $img_width }}">
+      <meta itemprop="height" content="{{ $img_height }}">
+      <meta itemprop="encodingFormat" content="image/webp">
+      <source srcset="{{ $image_webp }}" type="image/webp">
+      <img src="{{ $image_webp }}" width="{{ $img_width }}" height="{{ $img_height }}" itemprop="url">
+    </picture>
+
+    <div>
+      <h3 itemprop="name">{{ .Title }}</h3>
+      {{ if .Description }}
+        <p itemprop="description">{{ .Description }}</p>
+      {{ else }}
+        <p class="no-desc">This post has no description</p>
+      {{ end }}
+
+      <div class="tags" itemprop="keywords">
+        {{ range .Params.Tags }}
+          <span itemscope itemtype="https://schema.org/DefinedTerm">
+            <meta itemprop="inDefinedTermSet" content="{{ site.BaseURL }}tags/">
+            <meta itemprop="url" content="{{ site.BaseURL }}tags/{{ urlize . }}">
+            <span itemprop="name">{{ . }}</span>
+          </span>
+        {{ end }}
+      </div>
+    </div>
+  </a>
+</article>

@@ -23,7 +23,10 @@ module.exports = {
           800: '#21004c',
           900: '#0b0019',
         },
-        secondary: '#262626',
+        secondary: {
+          400: '#262626',
+          500: '#171717',
+        },
         accent: {
           50: '#e7fef5',
           100: '#b6fce0',
@@ -36,7 +39,11 @@ module.exports = {
           800: '#03492d',
           900: '#01180f',
         },
-      }
+      },
+      aspectRatio: {
+        '19/6': '16 / 6',
+        '16/9': '16 / 9',
+      },
     },
     fontFamily: {
       display: ['"Space Grotesk"', 'sans-serif'],

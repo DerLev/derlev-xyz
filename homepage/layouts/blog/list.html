@@ -1,0 +1,24 @@
+{{ define "header" }}
+  {{ partial "topnav" }}
+{{ end }}
+{{ define "main" }}
+  <main class="list-page" itemscope itemtype="https://schema.org/Blog" itemid="{{ .Permalink }}">
+    <header>
+      <h1 itemprop="name">Blog</h1>
+      <meta itemprop="description" content="{{ .Description }}">
+    </header>
+    <section class="articles-list">
+      {{ $paginator := .Paginate (where .Pages "Type" "blog") 20 }}
+
+      {{ range $paginator.Pages }}
+        {{ partial "post-card" . }}
+      {{ end }}
+    </section>
+    <div class="pagination-container">
+      {{ partial "paginationNav" . }}
+    </div>
+  </main>
+{{ end }}
+{{ define "footer" }}
+  {{ partial "footer" . }}
+{{ end }}

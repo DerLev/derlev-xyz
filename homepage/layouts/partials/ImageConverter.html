@@ -1,0 +1,27 @@
+{{/* Step 1: A default image as fallback */}}
+{{ $image := "/images/placeholder.png" }}
+
+{{/* Step 2: now check if passed image exists with same as title */}}
+{{ $img_param := .ImgParam }}
+
+{{/*  check if imige is in global resssources or page scoped ressources  */}}
+{{ $image_url := .Page.Resources.Get .ImageSrc }}
+{{ if not $image_url }}
+  {{ $image_url = resources.Get .ImageSrc }}
+{{ end }}
+
+{{- if not (.Page.Scratch.Get "droplist") -}}
+  {{- .Page.Scratch.Set "droplist" (slice) -}}
+{{- end -}}
+{{- .Page.Scratch.Add "droplist" $image_url.RelPermalink -}}
+
+{{ if $image_url }} 
+  {{/* Resize and convert the image  */}}
+  {{ $image_url = $image_url.Resize $img_param }}
+  {{ $image = $image_url.RelPermalink }}
+  {{ if .ImgAbsoluteUrl }}
+    {{ $image = $image_url.Permalink }}
+  {{ end }}
+{{ end }}
+
+{{ return $image }}

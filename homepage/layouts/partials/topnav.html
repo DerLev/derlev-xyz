@@ -1,0 +1,22 @@
+    <nav>
+      <div>
+        {{- $image_url := "/images/nav-256.png" -}}
+        {{- $image_width := 96 -}}
+        {{- $image_height := 96 -}}
+        {{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" (mul $image_width 2) (mul $image_height 2))) -}}
+        {{- $image_webp_small := partial "ImageConverter.html" (dict "ImageSrc" $image_url "ImgParam" (printf "%dx%d webp q90" $image_width $image_height)) -}}
+        <a href="/" class="nav-main">
+          <picture>
+            <source srcset="{{ $image_webp_small }}, {{ $image_webp }} 2x" type="image/webp">
+            <img class="nav-main-img" src="{{ $image_webp_small }}" width="{{ $image_width }}" height="{{ $image_height }}" alt="DerLev Profile">
+          </picture>
+          <span>DerLev</span>
+        </a>
+      </div>
+      <div class="nav-right">
+        <a href="/">Me</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+{{- "" -}}

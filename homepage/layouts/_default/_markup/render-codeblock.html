@@ -1,0 +1,5 @@
+{{ $result := transform.HighlightCodeBlock . }}
+<div class="not-prose relative">
+  <copy-code code="{{ .Inner }}"></copy-code>
+  {{ $result.Wrapped }}
+</div>

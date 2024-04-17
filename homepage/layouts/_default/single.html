@@ -1,0 +1,16 @@
+{{ define "header" }}
+  {{ partial "topnav" }}
+{{ end }}
+{{ define "main" }}
+  <!-- <main class="container prose dark:prose-invert p-8"> -->
+  <main>
+    <!-- {{/*  <h1 class="gradient-text">{{ .Title }}</h1>   */}} -->
+    {{/*  <h1>{{ .Title }}</h1>   */}}
+    <div class="single-content">
+      {{ .Content }}
+    </div>
+  </main>
+{{ end }}
+{{ define "footer" }}
+  {{ partial "footer" . }}
+{{ end }}
