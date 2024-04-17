@@ -103,13 +103,13 @@ body {
 }
 
 article.page {
-  @apply w-full max-w-5xl self-center px-4 flex flex-col gap-10;
+  @apply w-full max-w-5xl self-center px-1 flex flex-col gap-10;
 
   header {
-    @apply flex flex-col gap-4 w-full bg-text-900 rounded shadow-xl;
+    @apply flex flex-col gap-4 w-full bg-text-900 rounded-lg shadow-xl;
 
     .header-image {
-      @apply w-full max-h-72 h-full object-cover object-center self-center flex justify-center items-center overflow-hidden rounded shadow-xl;
+      @apply w-full max-h-72 h-full object-cover object-center self-center flex justify-center items-center overflow-hidden rounded-lg shadow-xl;
     }
 
     > h1 {
@@ -139,6 +139,7 @@ article.page {
   }
 
   .content {
+    @apply px-3;
     @include markdownContent();
   }
 }
