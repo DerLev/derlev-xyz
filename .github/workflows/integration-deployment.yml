@@ -33,13 +33,10 @@ jobs:
           filters: |
             homepage:
               - 'homepage/**'
-              - '!(homepage)/**/*.md'
             dashboard:
               - 'dashboard/**'
-              - '!(dashboard)/**/*.md'
             functions:
               - 'functions/**'
-              - '!(functions)/**/*.md'
   
   # START: Cloud Functions
   func-lint-typecheck:
