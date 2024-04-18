@@ -42,23 +42,23 @@
                   </span></a>
                 </span>
               </div>
-              <meta itemprop="dateCreated" content="{{ .Params.Date.Format "2006-01-02T15:04:05.000Z" }}">
+              <meta itemprop="dateCreated" content="{{ .Params.Date.Format "2006-01-02T15:04:05.000-07:00" }}">
               <div>Posted on 
-                <time datetime="{{ .Params.Date.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.Date.Format "02 Jan 2006 03:04:05 GMT-07:00" }}">
+                <time datetime="{{ .Params.Date.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.Date.Format "02 Jan 2006 15:04:05 GMT-07:00" }}">
                   {{ .Params.Date.Format "Monday, 02 Jan 2006" }}
                 </time>
               </div>
               {{/*  Show last updated from git commit timestamp if not released on the same day  */}}
               {{ if not (eq (.Params.Date.Format "2006-01-02") (.Params.LastMod.Format "2006-01-02")) }}
-                <meta itemprop="dateModified" content="{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}">
+                <meta itemprop="dateModified" content="{{ .Params.LastMod.Format "2006-01-02T15:04:05.000-07:00" }}">
                 <div>Updated on 
-                  <time datetime="{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.LastMod.Format "02 Jan 2006 03:04:05 GMT-07:00" }}">
+                  <time datetime="{{ .Params.LastMod.Format "2006-01-02T15:04:05.000Z" }}" data-hover="{{ .Params.LastMod.Format "02 Jan 2006 15:04:05 GMT-07:00" }}">
                     {{ .Params.LastMod.Format "Monday, 02 Jan 2006" }}
                   </time>
                 </div>
               {{ end }}
               {{ if .Params.ExpiryDate }}
-                <meta itemprop="expires" content="{{ .Params.ExpiryDate.Format "2006-01-02T15:04:05.000Z" }}">
+                <meta itemprop="expires" content="{{ .Params.ExpiryDate.Format "2006-01-02T15:04:05.000-07:00" }}">
               {{ end }}
           </div>
           <div class="tags" itemprop="keywords">

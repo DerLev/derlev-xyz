@@ -1,13 +1,25 @@
-{{- $image := resources.Get .Destination -}}
+{{- $dest := .Destination -}}
+{{- $dest := replace $dest "%20" " " -}}
+{{- $image := .Page.Resources.Get $dest -}}
 
 {{- if $image -}}
-{{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" .Destination "ImgParam" (printf "%dx%d webp q90" $image.Width $image.Height)) -}}
-{{- $image_jpg := partial "ImageConverter.html" (dict "ImageSrc" .Destination "ImgParam" (printf "%dx%d jpg q90" $image.Width $image.Height)) -}}
-<picture>
+{{- $image_width := cond (gt $image.Width 1280) 1280 $image.Width -}}
+{{- $image_height := cond (gt $image.Width 1280) (math.Floor (div  1280 (div (float $image.Width) (float $image.Height)))) $image.Height -}}
+{{- $image_webp := partial "ImageConverter.html" (dict "ImageSrc" $dest "ImgParam" (printf "%dx%d webp q90" $image_width (int $image_height)) "Page" .Page) -}}
+<figure class="content-image">
+  <picture>
     <source srcset="{{ $image_webp }}" type="image/webp">
-    <source srcset="{{ $image_jpg }}" type="image/jpeg">
-    <img loading="lazy" src="{{ $image_jpg }}" width="{{ $image.Width }}" height="{{ $image.Height  }}" {{ with .Text}} alt="{{ . }}" {{ end }} {{ with .Title}} title="{{ . }}"{{ end }}>
-</picture>
+    <img loading="lazy" src="{{ $image_webp }}" width="{{ $image_width }}" height="{{ $image_height }}" {{ with .Text}} alt="{{ . }}" {{ end }} {{ with .Title}} title="{{ . }}"{{ end }}>
+  </picture>
+  {{ if (or .Text .Title) }}
+  <figcaption>{{ if .Title }}{{ .Title }}{{ else }}{{ .Text }}{{ end }}</figcaption>
+  {{ end }}
+</figure>
 {{- else -}}
+<figure class="content-image">
   <img loading="lazy" src="{{ .Destination | safeURL }}" {{ with .Text}} alt="{{ . }}" {{ end }} {{ with .Title}} title="{{ . }}"{{ end }} />
+  {{ if (or .Text .Title) }}
+  <figcaption>{{ if .Title }}{{ .Title }}{{ else }}{{ .Text }}{{ end }}</figcaption>
+  {{ end }}
+</figure>
 {{- end -}}

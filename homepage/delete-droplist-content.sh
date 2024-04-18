@@ -49,7 +49,11 @@ process_nested_droplists "$directory"
 # Delete all files in the array (without confirmation)
 if [[ ${#files_to_delete[@]} -gt 0 ]]; then
   # Only return the first occurrence of a file in the array
-  dedup_files_to_delete=($(echo "${files_to_delete[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+  dedup_files_to_delete=()
+  while IFS= read -r element; do
+    dedup_files_to_delete+=("$element")
+  done < <(printf "%s\n" "${files_to_delete[@]}" | sort -u)
+
   echo "Deleting files:"
   printf "\t* %s\n" "${dedup_files_to_delete[@]}"
   # Delete the files

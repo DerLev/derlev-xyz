@@ -42,6 +42,18 @@ article.page {
   .content {
     @apply px-3;
     @include markdownContent();
+
+    .content-image {
+      @apply w-full h-auto max-w-xl mx-auto;
+
+      img {
+        @apply shadow;
+      }
+
+      figcaption {
+        @apply italic text-center;
+      }
+    }
   }
 }
 

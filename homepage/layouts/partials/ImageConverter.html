@@ -13,7 +13,8 @@
 {{- if not (.Page.Scratch.Get "droplist") -}}
   {{- .Page.Scratch.Set "droplist" (slice) -}}
 {{- end -}}
-{{- .Page.Scratch.Add "droplist" $image_url.RelPermalink -}}
+{{- $img_droplist_path := replace $image_url.RelPermalink "%20" " " -}}
+{{- .Page.Scratch.Add "droplist" $img_droplist_path -}}
 
 {{ if $image_url }} 
   {{/* Resize and convert the image  */}}
