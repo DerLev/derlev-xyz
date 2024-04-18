@@ -32,7 +32,8 @@
   </table>
   <h3 class="!mb-0">Commit</h3>
   <p class="text-text-500 italic">The last commit that changed some content</p>
-  {{ range first 1 .Site.AllPages.ByLastmod.Reverse }}
+  {{- $disallowedPages := slice "/tags/" "/blog/" "/authors/" -}}
+  {{ range first 1 (where site.AllPages.ByLastmod.Reverse "RelPermalink" "not in" $disallowedPages) }}
   <table class="!table-fixed !mb-0">
     <tbody>
       <tr>
@@ -46,6 +47,10 @@
       <tr>
         <td>Date</td>
         <td>{{ .GitInfo.CommitDate.Format "Monday, 02 Jan 2006 15:04:05 GMT-07:00" }}</td>
+      </tr>
+      <tr>
+        <td>Hash</td>
+        <td><a href="https://github.com/DerLev/derlev-xyz/commit/{{ .GitInfo.Hash }}/" rel="noopener noreferrer" target="_blank">{{ .GitInfo.AbbreviatedHash }}</a></td>
       </tr>
     </tbody>
   </table>
