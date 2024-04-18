@@ -1,0 +1,53 @@
+<div class="bg-neutral-800 rounded-lg shadow px-4 py-3 mb-6">
+  <h3 class="!mt-0">Hugo</h3>
+  <table class="!table-fixed">
+    <tbody>
+      <tr>
+        <td>Environment</td>
+        <td>{{ hugo.Environment }}</td>
+      </tr>
+      <tr>
+        <td>Version</td>
+        <td>{{ hugo.Version }}-{{ cond hugo.IsExtended "extended" "standard" }}</td>
+      </tr>
+      <tr>
+        <td>Go version</td>
+        <td>{{ hugo.GoVersion }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Build</h3>
+  <table class="!table-fixed">
+    <tbody>
+      <tr>
+        <td>Date</td>
+        <td>{{ time.Now.Format "Monday, 02 Jan 2006 03:04:05 GMT-07:00" }}</td>
+      </tr>
+      <tr>
+        <td>Built on</td>
+        {{/*  This is not 100% the truth but the site only gets deployed through GH Actions so this will work  */}}
+        <td>{{ cond hugo.IsProduction "GitHub Actions Runner" "local machine" }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 class="!mb-0">Commit</h3>
+  <p class="text-text-500 italic">The last commit that changed some content</p>
+  {{ range first 1 .Site.AllPages.ByLastmod.Reverse }}
+  <table class="!table-fixed !mb-0">
+    <tbody>
+      <tr>
+        <td>Message</td>
+        <td>{{ .GitInfo.Subject }}</td>
+      </tr>
+      <tr>
+        <td>Author</td>
+        <td>{{ .GitInfo.AuthorName }}</td>
+      </tr>
+      <tr>
+        <td>Date</td>
+        <td>{{ .GitInfo.CommitDate.Format "Monday, 02 Jan 2006 03:04:05 GMT-07:00" }}</td>
+      </tr>
+    </tbody>
+  </table>
+  {{ end }}
+</div>

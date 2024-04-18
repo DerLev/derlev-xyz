@@ -29,3 +29,7 @@ Web Components (e.g. Nav loader, "copy code" button). All hosted on
 [Google's Firebase](https://firebase.google.com/). You can always look at the 
 code yourself and fix typos or factual errors in the 
 [GitHub Repository](https://github.com/DerLev/derlev-xyz/).
+
+## Current version information
+
+{{< version-info >}}
