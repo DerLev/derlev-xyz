@@ -18,6 +18,7 @@ const CopyCode = ({ code }: { code: string }) => {
     <button
       className={`copy-code-button ${copied ? 'copied' : ''}`}
       onClick={copyToClipboard}
+      aria-label='Copy Codeblock'
     >
       {copied ? (
         <svg

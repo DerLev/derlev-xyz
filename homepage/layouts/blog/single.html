@@ -23,7 +23,7 @@
           <meta itemprop="height" content="{{ $thumbnail_file.Height }}">
           <meta itemprop="encodingFormat" content="image/webp">
           <source srcset="{{ $image_webp }}" type="image/webp">
-          <img src="{{ $image_webp }}" width="{{ $thumbnail_file.Width }}" height="{{ $thumbnail_file.Height }}" itemprop="contentUrl">
+          <img src="{{ $image_webp }}" width="{{ $thumbnail_file.Width }}" height="{{ $thumbnail_file.Height }}" alt="Header Image" itemprop="contentUrl">
         </picture>
 
         <h1 itemprop="name">{{ .Title }}</h1>

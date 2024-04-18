@@ -24,7 +24,7 @@
           <meta itemprop="height" content="{{ $image_height }}">
           <meta itemprop="encodingFormat" content="image/webp">
           <source srcset="{{ $image_webp }}, {{ $image_webp_hires }} 2x" type="image/webp">
-          <img src="{{ $image_webp }}" width="{{ $image_width }}" height="{{ $image_height }}" itemprop="url">
+          <img src="{{ $image_webp }}" width="{{ $image_width }}" height="{{ $image_height }}" alt="{{.Title}} Avatar" itemprop="url">
         </picture>
       </div>
       <div class="socials">
