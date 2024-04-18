@@ -3,7 +3,7 @@
 {{ end }}
 {{ define "main" }}
   <main>
-    <article class="page" itemscope itemtype="https://schema.org/BlogPosting" itemid="{{ .Permalink }}">
+    <article class="page {{ if .Draft }}draft{{ end }}" itemscope itemtype="https://schema.org/BlogPosting" itemid="{{ .Permalink }}">
       <meta itemprop="wordCount" content="{{ .WordCount }}">
       <meta itemprop="inLanguage" content="en">
       <meta itemprop="isAccessibleForFree" content="true">

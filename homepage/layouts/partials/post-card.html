@@ -1,4 +1,4 @@
-<article {{ if eq page.RelPermalink "/blog/" }}itemprop="blogPost"{{ end }} itemscope itemtype="https://schema.org/BlogPosting" itemid="{{ .Permalink }}">
+<article {{ if .Draft }}class="draft"{{ end }} {{ if eq page.RelPermalink "/blog/" }}itemprop="blogPost"{{ end }} itemscope itemtype="https://schema.org/BlogPosting" itemid="{{ .Permalink }}">
   <a href="{{ .RelPermalink }}" itemprop="mainEntityOfPage">
     {{ $img := .Resources.Get "img/thumbnail.png" }}
     {{ $img_path := cond (fileExists "img/thumbnail.png") "img/thumbnail.png" "images/default-thumbnail.png" }}

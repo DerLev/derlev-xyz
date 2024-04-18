@@ -96,6 +96,11 @@ main.list-page {
           }
         }
       }
+
+      
+      &.draft > a {
+        background: repeating-linear-gradient(135deg, theme('colors.neutral.800'), theme('colors.neutral.800') 10px, theme('colors.neutral.700' / 65%) 12px, theme('colors.neutral.700' / 65%) 12px);
+      }
     }
   }
 
