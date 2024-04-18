@@ -100,7 +100,7 @@ First I had to basically redo the proof-of-concept in my repository as I didn't 
 
 Then I had to build out the basic styles and layouts of the site. Starting with the landing page which strongly resembles the one from the previous Next.js site due to it functioning as my personal linktree. And then the pages that most users don't look at, being the About, Privacy, and Imprint pages. The *404: Not Found* page was just a rushed job, I will need to look at it again in the future.
 
-When I started to build the blog pages I really began to struggle as my knowledge of Hugo was not yet well developed, so to say. I needed to dig into ranges, conditions, and fetching asset files from the posts or global assets directory. That was also when I looked into image optimization. I found a [solution by devnodes.in](https://devnodes.in/blog/hugo/image-convert-to-webp/) and later augmented it with [the solution by Fabian](https://capnfabs.net/posts/hugo-theme-exclude-processed-images/) to automatically remove processed images from the Hugo output to save space which is certainly a concern for me as I only get 10GB of free Hosting storage in Firebase.
+When I started to build the blog pages I really began to struggle as my knowledge of Hugo was not yet well developed, so to say. I had to dig into ranges, conditions, and fetching asset files from the posts or global assets directory. That was also when I looked into image optimization. I found a [solution by devnodes.in](https://devnodes.in/blog/hugo/image-convert-to-webp/) and later augmented it with [the solution by Fabian](https://capnfabs.net/posts/hugo-theme-exclude-processed-images/) to automatically remove processed images from the Hugo output to save space which is certainly a concern for me as I only get 10GB of free Hosting storage in Firebase.
 
 {{< file "html" "ImageConverter.html" >}}
 
@@ -153,12 +153,12 @@ When I started to build the blog pages I really began to struggle as my knowledg
 # ...
 ```
 
-With those two files I can optimize images and convert them to WebP which is better for storage and use on the web and I get a .droplist file in the pages' directories which use the converter. In those droplist files I have the original files used listed which I can then remove from the output directory with a [simple bash script](https://github.com/DerLev/derlev-xyz/blob/b0e11546909440940d58f4aeb8596af6f0e222ed/homepage/delete-droplist-content.sh) to save space.
+With those two files I can optimize images and convert them to WebP which is better for storage and use on the web. I also get a .droplist file in the pages' directories which used the converter. In those droplist files I have the original files used listed which I can then remove from the output directory with a [simple bash script](https://github.com/DerLev/derlev-xyz/blob/b0e11546909440940d58f4aeb8596af6f0e222ed/homepage/delete-droplist-content.sh) to save space.
 
 Implementing SEO was also a bit rough because you need to constantly reference the schema from https://schema.org/ and really think like the crawler would when it comes to assigning types. Normally in Next.js you would just use a library but this time I wanted to do it myself. There are certainly Hugo modules for things like JSON-LD data but seeing how it is done gives you a better understanding on how SEO actually works, or at least it did for me.
 
 Is that it?  
-For this post that's all. But there are still thing I will need to do. Things like Table of Contents or looking at how a discussion function could be implemented.
+For this post that's all. But there are still things I will need to do. Things like Table of Contents or looking at how a discussion function could be implemented.
 
 ## The final result
 
