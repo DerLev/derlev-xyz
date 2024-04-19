@@ -16,7 +16,7 @@ html {
 }
 
 body {
-  @apply text-text-100 antialiased font-body overflow-y-scroll h-full;
+  @apply text-text-100 antialiased font-body overflow-y-scroll h-full scroll-pt-24 scroll-smooth;
   // @apply bg-background-dark;
   background: rgba($color: #050505, $alpha: .95) url(/styling/noise.svg);
   background-size: 150px 150px;
@@ -38,6 +38,7 @@ body {
 .nav-loader {
   @apply fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-accent-500 transition-opacity opacity-0;
   animation: fadeOut 150ms ease forwards;
+  z-index: 9999;
 
   &.active {
     @apply transition-none opacity-100;
