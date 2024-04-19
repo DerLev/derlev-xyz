@@ -73,7 +73,9 @@
           </div>
         </div>
       </header>
-    
+      {{ if (gt .WordCount 400) }}
+        {{ .TableOfContents }}
+      {{ end }}
       <section class="content" itemprop="articleBody">
         {{ .Content }}
       </section>
