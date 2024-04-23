@@ -18,6 +18,7 @@ const CopySectionLink = ({ url }: { url: string }) => {
     <button
       className={`copy-url-button ${copied ? 'copied' : ''}`}
       onClick={() => copyUrlToClipboard()}
+      aria-label="Copy Section URL"
     >
       {copied ? (
         <svg
