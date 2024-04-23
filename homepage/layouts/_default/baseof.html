@@ -14,14 +14,16 @@
     <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" type="image/png" sizes="180x180">
     <meta name="theme-color" content="#6c01f9">
     {{/*  fonts  */}}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" crossorigin="anonymous" />
     {{/*  vite  */}}
     <link rel="stylesheet" href="/client/{{ .Site.Data.react.css }}" />
     <script type="module" defer src="/client/{{ .Site.Data.react.js }}"></script>
     {{ partial "meta" . }}
     {{ partial "json-ld" . }}
+    {{ $registerSW := resources.Get "register-sw.js" | js.Build (dict "minify" true "params" (dict "dev" (hugo.IsProduction | not))) }}
+    <script type="text/javascript" defer src="{{ $registerSW.RelPermalink }}"></script>
   </head>
   <body>
     <div class="content-wrapper">

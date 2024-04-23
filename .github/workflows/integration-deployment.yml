@@ -156,6 +156,8 @@ jobs:
         run: hugo --gc
       - name: Delete Original Image Files
         run: ./delete-droplist-content.sh
+      - name: Generate Workbox Service Worker
+        run: yarn gulp:workbox
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
