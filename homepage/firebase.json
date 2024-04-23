@@ -21,7 +21,7 @@
         "source": "**",
         "headers": [{
           "key": "Content-Security-Policy",
-          "value": "script-src 'self'; style-src 'self' https://fonts.googleapis.com; default-src 'self'"
+          "value": "script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; default-src 'self'"
         }]
       }
     ]
