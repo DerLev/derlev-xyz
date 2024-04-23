@@ -5,7 +5,7 @@ on:
       - 'main'
 
 env:
-  HUGO_VERSION: 0.125.1
+  HUGO_VERSION: 0.125.3
   DASH_CONTAINER_REGISTRY_LOCATION: europe-west1
   DASH_CONTAINER_REGISTRY: cr-webapps
   DASH_CONTAINER_NAME: dashboard
