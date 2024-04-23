@@ -58,3 +58,9 @@ enableGitInfo = true
 
   [minify.tdewolff.html]
     keepQuotes = true
+
+[server]
+  [[server.headers]]
+    for = '/**'
+    [server.headers.values]
+      Content-Security-Policy = "script-src 'self'; style-src 'self' https://fonts.googleapis.com; default-src 'self'"
