@@ -1,0 +1,4 @@
+<h{{ .Level }} id="{{ .Anchor }}">
+  <copy-section-link url="{{ .Page.Permalink }}#{{ .Anchor }}"></copy-section-link>
+  {{- .Text | safeHTML -}}
+</h{{ .Level }}>

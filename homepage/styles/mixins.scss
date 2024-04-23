@@ -1,4 +1,21 @@
 @mixin markdownContent {
   @apply prose prose-invert prose-neutral prose-li:m-0 max-w-none;
   @apply prose-code:before:content-none prose-code:after:content-none prose-code:bg-background-dark prose-code:px-1 prose-code:py-0.5 prose-code:rounded;
+  @apply prose-headings:relative;
+
+  button.copy-url-button {
+    @apply absolute right-full top-1/2 -translate-y-1/2 text-text-300 pr-1 opacity-0 transition-opacity;
+
+    &:hover {
+      @apply opacity-100 #{!important};
+    }
+
+    &.copied {
+      @apply text-green-500;
+    }
+  }
+
+  :is(h1, h2, h3, h4, h5, h6):hover button.copy-url-button {
+    @apply opacity-75;
+  }
 }

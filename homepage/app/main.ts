@@ -8,6 +8,7 @@ export const router = flamethrower({ prefetch: 'hover', log: false })
 export * from './components/NavProgress'
 export * from './components/CookieConsent'
 export * from './components/CopyCode'
+export * from './components/CopySectionLink'
 
 window.addEventListener('flamethrower:router:fetch', () => {
   store.dispatch(isLoading())
