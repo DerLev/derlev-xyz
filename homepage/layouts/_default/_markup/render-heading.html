@@ -1,4 +1,6 @@
 <h{{ .Level }} id="{{ .Anchor }}">
+  {{- if .Page.InSection "blog" }}
   <copy-section-link url="{{ .Page.Permalink }}#{{ .Anchor }}"></copy-section-link>
+  {{- end }}
   {{- .Text | safeHTML -}}
 </h{{ .Level }}>
