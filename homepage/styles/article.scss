@@ -9,7 +9,7 @@ article.page {
     }
 
     > h1 {
-      @apply md:text-5xl text-4xl font-bold bg-gradient-to-t from-text-300 to-text-100 bg-clip-text text-transparent px-3 relative;
+      @apply md:text-5xl text-4xl font-bold md:leading-tight bg-gradient-to-t from-text-300 to-text-100 bg-clip-text text-transparent px-3 relative;
     }
 
     .article-info {
@@ -40,7 +40,7 @@ article.page {
   }
 
   nav#TableOfContents {
-    @apply flex flex-col items-start bg-neutral-900 relative rounded shadow z-0 m-0;
+    @apply flex flex-col items-start bg-neutral-900 relative rounded shadow z-10 m-0;
 
     &::before {
       content: "Table of Contents";
@@ -48,7 +48,11 @@ article.page {
     }
 
     ul {
-      @apply hidden absolute bg-neutral-800 rounded shadow left-0 right-0 top-0 py-1 px-8 list-inside list-disc;
+      @apply list-inside list-disc pl-4;
+    }
+
+    > ul {
+      @apply hidden absolute bg-neutral-800 rounded shadow left-0 right-0 top-0 py-1 px-8;
 
       li {
         @apply my-1 font-medium text-text-300;
@@ -59,12 +63,12 @@ article.page {
       }
     }
 
-    &:hover ul {
+    &:hover > ul {
       @apply block;
     }
 
     @media (hover: none) {
-      ul {
+      > ul {
         @apply block relative bg-inherit px-0;
       }
     }

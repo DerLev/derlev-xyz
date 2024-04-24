@@ -1,0 +1,32 @@
+{{ $boxType := .Attributes.type }}
+<div class="information-box type-{{ $boxType }}">
+  {{ if eq $boxType "note" }}
+  <div class="head">
+    {{ "assets/icons/information-circle.svg" | readFile | safeHTML }}
+    <span>Note</span>
+  </div>
+  {{ else if eq $boxType "tip" }}
+  <div class="head">
+    {{ "assets/icons/light-bulb.svg" | readFile | safeHTML }}
+    <span>Tip</span>
+  </div>
+  {{ else if eq $boxType "important" }}
+  <div class="head">
+    {{ "assets/icons/chat-bubble-with-text.svg" | readFile | safeHTML }}
+    <span>Important</span>
+  </div>
+  {{ else if eq $boxType "warning" }}
+  <div class="head">
+    {{ "assets/icons/exclamation-triangle.svg" | readFile | safeHTML }}
+    <span>Warning</span>
+  </div>
+  {{ else if eq $boxType "caution" }}
+  <div class="head">
+    {{ "assets/icons/exclamation-circle.svg" | readFile | safeHTML }}
+    <span>Caution</span>
+  </div>
+  {{ end }}
+  <div>
+    {{ .Inner | .Page.RenderString }}
+  </div>
+</div>
