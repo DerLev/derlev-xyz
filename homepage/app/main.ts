@@ -9,6 +9,7 @@ export * from './components/NavProgress'
 export * from './components/CookieConsent'
 export * from './components/CopyCode'
 export * from './components/CopySectionLink'
+export * from './components/ScrollToTop'
 
 window.addEventListener('flamethrower:router:fetch', () => {
   store.dispatch(isLoading())
@@ -42,11 +43,26 @@ const bodyScrollListenerCallback = () => {
   else navBar.classList.remove('scrolled')
 }
 
+let buttonHideTimeout: NodeJS.Timeout
+
+const bodyScrollButtonCallback = () => {
+  const scrollToTopButton = document.querySelector(
+    'button.scroll-to-top-button',
+  )
+
+  scrollToTopButton?.classList.remove('hidden')
+  clearTimeout(buttonHideTimeout)
+  buttonHideTimeout = setTimeout(() => {
+    scrollToTopButton?.classList.add('hidden')
+  }, 2000)
+}
+
 window.addEventListener('load', () => {
   getNavbarHeight()
   bodyScrollListenerCallback()
   document.body.addEventListener('scroll', () => {
     bodyScrollListenerCallback()
+    bodyScrollButtonCallback()
   })
 })
 window.addEventListener('flamethrower:router:end', () => {
@@ -54,5 +70,6 @@ window.addEventListener('flamethrower:router:end', () => {
   bodyScrollListenerCallback()
   document.body.addEventListener('scroll', () => {
     bodyScrollListenerCallback()
+    bodyScrollButtonCallback()
   })
 })
