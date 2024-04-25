@@ -63,4 +63,4 @@ enableGitInfo = true
   [[server.headers]]
     for = '/**'
     [server.headers.values]
-      Content-Security-Policy = "script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; default-src 'self'"
+      Content-Security-Policy = "script-src 'self'; style-src 'self' https://fonts.googleapis.com 'sha256-bgIgBp9mClcR88BdUQByDKYQXqIi9lmerx/qTrBVkWg='; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; default-src 'self'"
