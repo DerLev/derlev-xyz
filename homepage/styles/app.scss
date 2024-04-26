@@ -124,7 +124,7 @@ time[data-hover] {
 }
 
 button.scroll-to-top-button {
-  @apply block fixed bottom-0 right-0 mb-4 mr-5 rounded-full p-1.5 bg-neutral-800/45 backdrop-blur transition-opacity text-neutral-300 shadow-lg;
+  @apply block fixed bottom-0 right-0 mb-4 mr-5 rounded-full p-2 bg-neutral-800/45 backdrop-blur transition-opacity text-neutral-300 shadow-lg z-50 text-lg;
 
   &.hidden {
     @apply opacity-0 duration-500;
