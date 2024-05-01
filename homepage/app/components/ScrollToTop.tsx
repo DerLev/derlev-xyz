@@ -6,7 +6,11 @@ const ScrollToTop = () => {
   }
 
   return (
-    <button className="scroll-to-top-button hidden" onClick={scrollToTop}>
+    <button
+      className="scroll-to-top-button hidden"
+      onClick={scrollToTop}
+      aria-label="Scroll To Top"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
