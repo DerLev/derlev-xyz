@@ -34,3 +34,7 @@ container:
 With these options we mount the the `/etc/ssl/certs/ca-certificates.crt` file into the container running the actions workflow. We also need to specify this file for Node.js to use since actions like my [eslint-annotations](https://github.com/DerLev/eslint-annotations/) use the Node.js runtime which itself employs its own trusted roots store. We just need to specify the `NODE_EXTRA_CERTS` environment variable to include our root cert.
 
 That's it! With that our Gitea Act Runner can run workflows through our local Gitea instance secured by our own CA.
+
+```box { type=source }
+https://forum.gitea.com/t/cannot-checkout-a-repository-hosted-on-a-gitea-instance-using-self-signed-certificate-server-certificate-verification-failed/7903/3
+```

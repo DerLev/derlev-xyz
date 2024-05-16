@@ -25,6 +25,11 @@
     {{ "assets/icons/exclamation-circle.svg" | readFile | safeHTML }}
     <span>Caution</span>
   </div>
+  {{ else if eq $boxType "source" }}
+  <div class="head">
+    {{ "assets/icons/Bars3-BL.svg" | readFile | safeHTML }}
+    <span>Source</span>
+  </div>
   {{ end }}
   <div>
     {{ .Inner | .Page.RenderString }}

@@ -50,6 +50,11 @@
       --box-head-color: theme('colors.red.500');
     }
 
+    &.type-source {
+      --box-type-color: theme('colors.text.500');
+      --box-head-color: theme('colors.text.300');
+    }
+
     .head {
       @apply flex items-center gap-2 text-lg mb-2 font-medium;
       color: var(--box-head-color);
