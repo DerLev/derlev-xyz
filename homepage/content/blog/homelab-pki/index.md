@@ -38,7 +38,7 @@ https://jamielinux.com/docs/openssl-certificate-authority/
 
 First we need to make sure that openssl is in fact installed. Usually it should be but it's good to check.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" >}}
 
 ```bash
 openssl version
@@ -46,7 +46,7 @@ openssl version
 
 Now, if you aren't already, switch users to root. It's best to use root for the ca files since files owned by root that also have tight permissions can only be accessed by root and no other process or user.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" >}}
 
 ```bash
 sudo su
@@ -55,7 +55,7 @@ cd ~
 
 Now that we are in `/root` we can create a few files and folders we need for our CA.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 # Folders for the Root CA
@@ -81,7 +81,7 @@ With these commands we are creating folders for our root and our intermediate wh
 
 First switch back to the `/root/ca` folder and download the `openssl.cnf` with `wget` there.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 cd /root/ca
@@ -163,7 +163,7 @@ We will use the `secp384r1` curve for our root and our intermediates. This curve
 
 To generate an ECDSA key we can use `openssl ecparam -curve secp384r1 -genkey` but this will generate a key that is not encrypted. Since this is our root key we definitely want to encrypt it.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl ecparam -curve secp384r1 -genkey | openssl ec -aes256 -out private/ca.key
@@ -174,7 +174,7 @@ This will generate the key and ask you for a password to encrypt it and *then* s
 
 Now that we have the key we can generate a Certificate Signing Request (CSR) and sign it by ourselves resulting in our root certificate. The command below will do just that with a certificate that will last for 69 years.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl req -config openssl.cnf \
@@ -189,7 +189,7 @@ The last command will just modify the file permissions to allow anyone to read o
 
 We can also print the metadata of our cert and check if we used the correct algorithm, if the cert expires in 69 years, and if we typed our subject information correctly. If you made a mistake **now is the time to correct it**. If we established a chain of trust we cannot make changes to our upstream certs anymore!
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl x509 -noout -text -in certs/ca.pem
@@ -201,7 +201,7 @@ Now that our root is setup and active we can setup our 1st intermediate signing 
 
 To setup our intermediate we first need to change our working directory to our intermediate directory we created earlier. In here we can just copy over our `openssl.cnf` or copy it with `wget`.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 cd /root/ca/intermediate
@@ -225,7 +225,7 @@ policy          = policy_loose
 
 Now we just need to do the entire key creation dance again but this time for our intermediate. Use a strong password for the key and more importantly a vastly different one from the one you used for your root key.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca/intermediate" "root" >}}
 
 ```bash
 openssl ecparam -curve secp384r1 -genkey | openssl ec -aes256 -out private/intermediate.key
@@ -238,7 +238,7 @@ Now we don't self sign our certificate, we create a CSR that we then sign with o
 We will do this from the root CA's directory. For the first command we want to specify the intermediate's `openssl.cnf`. The second command for singing the request wil use the root's `openssl.cnf`.
 ```
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca/intermediate" "root" >}}
 
 ```bash
 cd /root/ca
@@ -249,7 +249,7 @@ openssl req -config intermediate/openssl.cnf -new -sha256 \
 
 Now we can sign that CSR with our root. This will return a valid certificate that will expire in 10 years.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl ca -config openssl.cnf -extensions v3_intermediate_ca \
@@ -263,7 +263,7 @@ The second command again modifies the certs file permissions so that anyone can 
 
 We can again verify that we created the certificate with the correct subject and other params and that it is in fact signed and trusted by our root.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl x509 -noout -text \
@@ -277,7 +277,7 @@ If the second command does not return `OK` stop right here and redo your interme
 
 Now we can create the root intermediate chain file. This is just a file with both the intermediate and root certificate inside so that a client receiving it can instantly reference the chain of trust.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 cat intermediate/certs/intermediate.pem \
@@ -309,7 +309,7 @@ You can also use this web server to distribute your certificate files for entrus
 
 First we need to generate our CRL.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl ca -config openssl.cnf \
@@ -318,7 +318,7 @@ openssl ca -config openssl.cnf \
 
 We can then convert it to DER and copy it over into a separate folder on our web server.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl crl -inform PEM -in crl/ca.crl.pem \
@@ -412,7 +412,7 @@ The only thing left is to revoke a certificate.
 Revoking a certificate cannot be undone. This command will revoke the intermediate's certificate. Be careful!
 ```
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "/root/ca" "root" >}}
 
 ```bash
 openssl ca -config openssl.cnf \
@@ -434,7 +434,7 @@ First we need to install `step-cli` and `step-ca` on the CA server.
 I will not update the version numbers of these commands. Please check the [`step-cli`](https://github.com/smallstep/cli/releases/) and [`step-ca`](https://github.com/smallstep/certificates/releases/) release pages for the most recent versions.
 ```
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 # step cli
@@ -450,7 +450,7 @@ rm ./*.deb
 
 We now have to create our `step-ca` directory where we configure smallstep and put our certificates and keys. We will create a separate user for Smallstep so that it is isolated from our root user where all of our sensitive CA files are stored.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 mkdir -p /etc/step
@@ -470,7 +470,7 @@ export STEPPATH=/etc/step
 
 Now we can create the `step-ca` config. Smallstep has an init command we can use for that.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 # Replace the dns name to match yours (I am using my localdomain hostname) and replace the provisioner name
@@ -479,7 +479,7 @@ step ca init --name="PKI-CA" --dns="pki-ca.dmz.vlan.party" --address=":443" --pr
 
 This command will generate an entirely new CA with root and intermediate which we don't want. But the nice thing is that it generates all the files we need. Consequently we now need to replace the root cert and intermediate cert and key with the ones we generated with openssl.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 cp /root/ca/certs/ca.pem /etc/step/certs/root_ca.crt
@@ -494,7 +494,7 @@ chown -R step:step /etc/step
 
 We also need to reconfigure our `step-cli` with the correct certificate fingerprint.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 step certificate fingerprint /etc/step/certs/root_ca.crt
@@ -517,7 +517,7 @@ Now we just need to setup a systemd service for the `step-ca` server to run in t
 
 First we need to add a file with our intermediate key's password. This is needed because `step-ca` obviously needs to sign certificates with the intermediate's key.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 echo "YOUR KEY PASS HERE" > /etc/step/secrets/intermediate_password
@@ -545,7 +545,7 @@ WantedBy=multi-user.target
 
 But before we can activate our service we have to add the `CAP_NET_BIND_SERVICE` capability which allows `step-ca` to bind to ports lower than 1024 (we need 443).
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 setcap CAP_NET_BIND_SERVICE=+eip /usr/bin/step-ca
@@ -553,7 +553,7 @@ setcap CAP_NET_BIND_SERVICE=+eip /usr/bin/step-ca
 
 Now we can reload the systemd daemon and enable our service.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 systemctl reload-daemon
@@ -570,7 +570,7 @@ Right now if we had a TLS certificate presented to us by a web server our browse
 
 We need to get the certificate from the Smallstep server, ignoring the invalid cert error, and put it into `/usr/local/share/ca-certificates` where all additional root certs live.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 wget --no-check-certificate https://pki-ca.dmz.vlan.party/roots.pem -O /usr/local/share/ca-certificates/pki-ca.crt
@@ -579,7 +579,7 @@ update-ca-certificates
 
 The second command updates the trusted store. To validate that this operation worked we can just curl our Smallstep server.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" >}}
 
 ```bash
 curl https://pki-ca.dmz.vlan.party
@@ -637,13 +637,15 @@ After you have gone through these steps the certificate is installed but not yet
 iOS and iPadOS are quite restrictive on where certificates, keys, and configuration profiles can originate from. You will need to either use Safari, Apple Mail, or the Files app to load profiles. Some file types, like P12 files, also *need* to be password protected.
 ```
 
-## Requesting an ACME certificate with Traefik
+## Requesting an ACME certificate
+
+### with Traefik
 
 Now that we have established trust towards our CA we can start to use it. We can now request a certificate with ACME for our Traefik instance.
 
 But before we can do that we have to add an ACME provisioner in Smallstep. To do that we have to log back into our machine running Smallstep and switch users to root.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 step ca provisioner add acme-z9w4d11j --type ACME --challenge http-01 --challenge dns-01 --challenge tls-alpn-01 --admin-name derlev
@@ -685,6 +687,8 @@ With that configured we can now request a certificate for our Traefik instance. 
 
 ```yaml
 # ...
+    environment:
+      - CF_DNS_API_TOKEN=your_cf_api_token
     labels:
       # ...
       - "traefik.http.routers.traefik-secure.tls=true"
@@ -694,6 +698,22 @@ With that configured we can now request a certificate for our Traefik instance. 
 ```
 
 This config will get a certificate that is valid for all subdomains of `dmz.vlan.party` as I use Traefik for routing my internal services. Traefik will then automatically apply this certificate to where it can fit one of the listed domain names.
+
+### with Caddy
+
+Using a custom ACME CA with Caddy is very simple. You will just need to add the `acme_ca` directive with the ACME URL from Smallstep in the global config and that's it. Ofcourse your machine needs to have the root's cert installed but Caddy will then just request a certificate from Smallstep with the `http-01` challenge and serve your website over HTTPS.
+
+{{< file "caddy" "Caddyfile" >}}
+
+```caddyfile
+{
+  acme_ca https://pki-ca.dmz.vlan.party/acme/acme-z9w4d11j/directory
+}
+
+your-domain.dmz.vlan.party {
+  # your caddy config
+}
+```
 
 ## Creating a client certificate
 
@@ -710,7 +730,7 @@ By default any provisioner can only issue certificates that are valid for 24h. L
 https://smallstep.com/docs/step-cli/reference/ca/
 ```
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" >}}
 
 ```bash
 # assuming you have step-cli already installed
@@ -724,7 +744,7 @@ After selecting your admin provisioner and entering your password you will have 
 
 With the key, cert, and chain files creating a P12 goes as follows:
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" >}}
 
 ```bash
 openssl pkcs12 -export -inkey phone.key -in phone.crt -certfile ca-chain.pem -out phone.p12
@@ -762,7 +782,7 @@ This will generate a key for the user on the TPM with the ECDSA P384 algorithm a
 
 With the following command we generate the key and CSR which we then need to sign with our intermediate.
 
-{{< file "powershell" "powershell.exe" >}}
+{{< terminal "pwsh" >}}
 
 ```powershell
 certreq -new desktop-certreq.inf desktop.csr
@@ -770,7 +790,7 @@ certreq -new desktop-certreq.inf desktop.csr
 
 With the CSR we can issue a certificate with Smallstep.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" >}}
 
 ```bash
 step ca sign desktop.csr desktop.crt
@@ -778,7 +798,7 @@ step ca sign desktop.csr desktop.crt
 
 And import that cert into the Windows Certificates Store with `certreq`.
 
-{{< file "powershell" "powershell.exe" >}}
+{{< terminal "pwsh" >}}
 
 ```powershell
 certreq -accept -user dekstop.crt
@@ -792,7 +812,7 @@ On Apple devices we can make use of two things. We can use the ACME `device-atte
 
 To use ACME `device-attest-01` we will need to create a new provisioner in our Smallstep `step-ca`. To do that we need to log into the CA machine and switch users to root.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" "~" "root" >}}
 
 ```bash
 step ca provisioner add apple-afpl541u --type ACME --challenge device-attest-01 --admin-name derlev
@@ -878,7 +898,7 @@ This .mobileconfig can be loaded onto an iPhone, iPad, iPod, or a macOS device a
 
 To circumvent that we can sign the file with openssl. You will need to create a certificate and key with Smallstep for signing your .mobileconfig files which I will omit.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" >}}
 
 ```bash
 openssl smime -sign -signer signer.crt -inkey signer.key -certfile ca-chain.pem -nodetach -outform der -in ipad.mobileconfig -out ipad-signed.mobileconfig

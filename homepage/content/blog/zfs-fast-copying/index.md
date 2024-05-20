@@ -12,7 +12,7 @@ ZFS can copy/move files between datasets very fast.
 
 To do this you will need at least `ZFS 2.2` on your pool. To check that you can run the first command. If that command returns a dash for the pool version use the second command, your pool uses feature flags instead of version numbers. If the feature filtered by grep returns `enabled` you are good to go.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" >}}
 
 ```bash
 zpool get version PoolName
@@ -23,7 +23,7 @@ zpool get all PoolName | grep feature@block_cloning
 
 To copy or move a file you will just need to use `--reflink=auto` with the copy command. Sadly this does not work with the `mv` command so you will need to delete the original file if you want to move it.
 
-{{< file "bash" "/bin/bash" >}}
+{{< terminal "bash" >}}
 
 ```bash
 cp --reflink=auto /mnt/zpool/from/path /mnt/zpool/to/path

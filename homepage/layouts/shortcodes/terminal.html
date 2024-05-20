@@ -1,0 +1,15 @@
+{{ $icon := "assets/icons/command-line.svg" }}
+
+{{ $icon_selected := .Get 0 }}
+{{ $icon_selected = cond (eq $icon_selected "pwsh") "powershell" $icon_selected }}
+{{ $icon_selected = cond (eq $icon_selected "sh") "shell" $icon_selected }}
+{{ $icon_selected = (print "assets/icons/" $icon_selected ".svg") }}
+{{ if ($icon_selected | readFile)}}
+  {{ $icon = $icon_selected }}
+{{ end }}
+
+{{ $user := cond (.Get 2 | not | not) (.Get 2) "user" }}
+
+<div class="terminal">
+  <span class="shell-icon">{{ $icon | readFile | safeHTML }}</span> {{ $user }}: {{ cond (.Get 1 | not | not) (.Get 1) "~" }}
+</div>

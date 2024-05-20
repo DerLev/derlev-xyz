@@ -92,12 +92,12 @@ article.page {
   }
 }
 
-.file-name {
+.file-name, .terminal {
   @apply border-2 border-b-0 border-text-500/35 bg-background-dark inline-flex items-center py-2 px-4 gap-2 text-text-300 text-sm z-40;
   position: relative;
   bottom: -2px;
 
-  .file-icon {
+  .file-icon, .shell-icon {
     @apply text-lg;
   }
 }
