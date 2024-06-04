@@ -1,4 +1,4 @@
-{{ $href := printf "%s%s" (index site.Data.socials .platform).href (string .link) }}
+{{ $href := printf "%s%s/" (index site.Data.socials .platform).href (string .link) }}
 {{ $platformName := (index site.Data.socials .platform).name }}
 
 <a href="{{ $href }}" rel="noopener noreferrer" class="social-link" {{ if .sameAs }}itemprop="sameAs"{{ end }}>
