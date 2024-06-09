@@ -5,7 +5,7 @@ directory="public"
 
 # array of files to be deleted with default files
 # deleting page 1 as the redirect is handled by Firebase Hosting
-files_to_delete=("public/blog/page/1")
+files_to_delete=("public/blog/page/1" "public/images/nav-256.png")
 
 # Function to process a .droplist file
 process_droplist() {
