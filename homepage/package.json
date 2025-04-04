@@ -47,6 +47,6 @@
     "workbox-build": "^7.0.0"
   },
   "engines": {
-    "node": "20"
+    "node": "22"
   }
 }

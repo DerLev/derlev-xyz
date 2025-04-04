@@ -30,4 +30,11 @@ export default defineConfig({
     assetsDir: '',
   },
   plugins: [react(), syncToHugo()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern",
+      },
+    },
+  },
 })
