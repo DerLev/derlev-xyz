@@ -41,37 +41,30 @@ article.page {
     @apply text-text-300 bg-neutral-700 px-2 rounded-full text-base font-normal ml-4 absolute bottom-1/2 translate-y-1/2;
   }
 
-  nav#TableOfContents {
-    @apply flex flex-col items-start bg-neutral-900 relative rounded shadow z-10 m-0;
+  details#tocDisclosure {
+    @apply bg-neutral-900 rounded shadow px-8 py-3 flex flex-col divide-y divide-neutral-800 select-none;
 
-    &::before {
-      content: "Table of Contents";
-      @apply block font-medium;
+    summary {
+      @apply font-medium cursor-pointer;
     }
 
-    ul {
-      @apply list-inside list-disc pl-4;
-    }
+    nav {
+      @apply flex flex-col items-start mb-0;
 
-    > ul {
-      @apply hidden absolute bg-neutral-800 rounded shadow left-0 right-0 top-0 py-1 px-8;
+      ul {
+        @apply list-inside list-disc pl-4;
 
-      li {
-        @apply my-1 font-medium text-text-300;
-
-        a {
-          @apply text-text-100 underline;
+        li {
+          @apply my-1 font-medium text-text-300;
+  
+          a {
+            @apply text-text-100 underline;
+          }
         }
       }
-    }
 
-    &:hover > ul {
-      @apply block;
-    }
-
-    @media (hover: none) {
       > ul {
-        @apply block relative bg-inherit px-0;
+        @apply pl-0;
       }
     }
   }

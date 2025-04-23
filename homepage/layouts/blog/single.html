@@ -74,7 +74,10 @@
         </div>
       </header>
       {{ if (gt .WordCount 400) }}
-        {{ .TableOfContents }}
+        <details id="tocDisclosure">
+          <summary>Table of Contents</summary>
+          {{ .TableOfContents }}
+        </details>
       {{ end }}
       <section class="content" itemprop="articleBody">
         {{ .Content }}
