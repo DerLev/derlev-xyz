@@ -22,5 +22,9 @@
   "website": {
     "href": "",
     "name": "Website"
+  },
+  "matrix": {
+    "href": "https://matrix.to/#/",
+    "name": "Matrix"
   }
 }
