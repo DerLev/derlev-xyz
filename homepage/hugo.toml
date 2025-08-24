@@ -15,16 +15,27 @@ enableGitInfo = true
   [mediaTypes."text/droplist"]
     suffixes = ["droplist"]
 
-[outputFormats.droplist]
-  mediatype = "text/droplist"
-  isPlainText = true
+  [mediaTypes."application/atom+xml"]
+    suffixes = ["atom"]
+
+[outputFormats]
+  [outputFormats.droplist]
+    mediatype = "text/droplist"
+    isPlainText = true
+
+  [outputFormats.atom]
+    mediaType = "application/atom+xml"
+    noUgly = true
+    isPlainText = true
+    isHTML = false
 
 [outputs]
   page = ["HTML", "droplist"]
+  section = ["HTML", "atom"]
 
 [permalinks]
   [permalinks.page]
-    blog = "/blog/:year/:slugorfilename"
+    blog = "/blog/:year/:slugorcontentbasename"
 
 [sitemap]
   changeFreq = 'weekly'
