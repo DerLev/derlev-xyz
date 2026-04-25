@@ -5,7 +5,7 @@ on:
       - 'main'
 
 env:
-  HUGO_VERSION: 0.148.2
+  HUGO_VERSION: 0.160.1
   DASH_CONTAINER_REGISTRY_LOCATION: europe-west1
   DASH_CONTAINER_REGISTRY: cr-webapps
   DASH_CONTAINER_NAME: dashboard
@@ -99,7 +99,7 @@ jobs:
       - name: Setup Nodejs Environment
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: yarn
           cache-dependency-path: 'homepage/yarn.lock'
       - name: Install Dependencies
@@ -145,7 +145,7 @@ jobs:
       - name: Setup Nodejs Environment
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: yarn
           cache-dependency-path: 'homepage/yarn.lock'
       - name: Install Yarn Dependencies

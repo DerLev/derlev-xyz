@@ -35,24 +35,28 @@
   {{- $disallowedPages := slice "/tags/" "/blog/" "/authors/" -}}
   {{ range first 1 (where site.AllPages.ByLastmod.Reverse "RelPermalink" "not in" $disallowedPages) }}
   <table class="!table-fixed !mb-0">
-    <tbody>
-      <tr>
-        <td>Message</td>
-        <td>{{ .GitInfo.Subject }}</td>
-      </tr>
-      <tr>
-        <td>Author</td>
-        <td>{{ .GitInfo.AuthorName }}</td>
-      </tr>
-      <tr>
-        <td>Date</td>
-        <td>{{ .GitInfo.CommitDate.Format "Monday, 02 Jan 2006 15:04:05 GMT-07:00" }}</td>
-      </tr>
-      <tr>
-        <td>Hash</td>
-        <td><a href="https://github.com/DerLev/derlev-xyz/commit/{{ .GitInfo.Hash }}/" rel="noopener noreferrer" target="_blank">{{ .GitInfo.AbbreviatedHash }}</a></td>
-      </tr>
-    </tbody>
+    {{ $pagesWithGit := where .Site.RegularPages ".GitInfo" "!=" nil }}
+    {{ if $pagesWithGit }}
+      {{ $latestPage := index (sort $pagesWithGit "Lastmod" "desc") 0 }}
+      <tbody>
+        <tr>
+          <td>Message</td>
+          <td>{{ $latestPage.GitInfo.Subject }}</td>
+        </tr>
+        <tr>
+          <td>Author</td>
+          <td>{{ $latestPage.GitInfo.AuthorName }}</td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td>{{ $latestPage.GitInfo.CommitDate.Format "Monday, 02 Jan 2006 15:04:05 GMT-07:00" }}</td>
+        </tr>
+        <tr>
+          <td>Hash</td>
+          <td><a href="https://github.com/DerLev/derlev-xyz/commit/{{ $latestPage.GitInfo.Hash }}/" rel="noopener noreferrer" target="_blank">{{ $latestPage.GitInfo.AbbreviatedHash }}</a></td>
+        </tr>
+      </tbody>
+    {{ end }}
   </table>
   {{ end }}
 </div>

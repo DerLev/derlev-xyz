@@ -61,8 +61,8 @@ const syncToHugo = () => {
 <html lang="en">
   <head>
     <!-- ... -->
-    <link rel="stylesheet" href="/client/{{ .Site.Data.react.css }}" />
-    <script type="module" defer src="/client/{{ .Site.Data.react.js }}"></script>
+    <link rel="stylesheet" href="/client/{{ hugo.Data.react.css }}" />
+    <script type="module" defer src="/client/{{ hugo.Data.react.js }}"></script>
     <!-- ... -->
   </head>
   <body>
